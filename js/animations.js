@@ -27,7 +27,7 @@ function createHeroTitleAnimation(titleElement) {
 
         const inner = document.createElement('span');
         inner.style.display = 'inline-block';
-        inner.textContent = char === ' ' ? ' ' : char;
+        inner.innerHTML = char === ' ' ? '&nbsp;' : char;
         inner.style.transform = 'rotateX(90deg)';
         inner.style.transformOrigin = '50% 50%';
         inner.style.opacity = '0';
@@ -75,31 +75,37 @@ export function initAnimations(scrollInstance) {
         });
     }
 
-    // Split-line mask reveals
+    // Split-line mask reveals (scroll-position based, not IntersectionObserver)
     const splitElements = document.querySelectorAll('.split-line-mask-effect');
+    const splitData = [];
     splitElements.forEach(el => {
         if (!el.querySelector('.split-line')) {
             splitTextIntoLines(el);
         }
+        splitData.push({ el, revealed: false });
     });
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const innerSpan = entry.target.querySelector('.split-line-inner');
-                if (innerSpan) {
-                    gsap.to(innerSpan, {
-                        y: 0,
-                        duration: 0.8,
-                        ease: 'power3.out',
-                    });
+    if (scrollInstance) {
+        scrollInstance.onScroll((scrollY) => {
+            const vh = window.innerHeight;
+            for (const item of splitData) {
+                if (item.revealed) continue;
+                const rect = item.el.getBoundingClientRect();
+                const elTop = rect.top + scrollY;
+                if (scrollY + vh * 0.8 > elTop) {
+                    item.revealed = true;
+                    const innerSpan = item.el.querySelector('.split-line-inner');
+                    if (innerSpan) {
+                        gsap.to(innerSpan, {
+                            y: 0,
+                            duration: 0.8,
+                            ease: 'power3.out',
+                        });
+                    }
                 }
-                observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.2 });
-
-    splitElements.forEach(el => observer.observe(el));
+    }
 
     // Featured card hover
     const featuredItems = document.querySelectorAll('.featured-item');
@@ -131,20 +137,25 @@ export function initAnimations(scrollInstance) {
         updateCursor();
     }
 
-    // Lazy load featured card images
-    const lazyImages = document.querySelectorAll('.featured-item-image-inner[data-src]');
-    const imgObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const el = entry.target;
-                el.style.backgroundImage = `url(${el.dataset.src})`;
-                gsap.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.5 });
-                imgObserver.unobserve(el);
+    // Lazy load featured card images (scroll-position based)
+    const lazyImages = [...document.querySelectorAll('.featured-item-image-inner[data-src]')];
+    const lazyData = lazyImages.map(el => ({ el, loaded: false }));
+
+    if (scrollInstance) {
+        scrollInstance.onScroll((scrollY) => {
+            const vh = window.innerHeight;
+            for (const item of lazyData) {
+                if (item.loaded) continue;
+                const rect = item.el.getBoundingClientRect();
+                const elTop = rect.top + scrollY;
+                if (scrollY + vh + 200 > elTop) {
+                    item.loaded = true;
+                    item.el.style.backgroundImage = `url(${item.el.dataset.src})`;
+                    gsap.fromTo(item.el, { opacity: 0 }, { opacity: 1, duration: 0.5 });
+                }
             }
         });
-    }, { rootMargin: '200px' });
-
-    lazyImages.forEach(img => imgObserver.observe(img));
+    }
 
     // Scrollbar indicator
     const scrollbarIndicator = document.getElementById('main-scrollbar-indicator');

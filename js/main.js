@@ -1,5 +1,4 @@
 import { SmoothScroll } from './scroll.js';
-import { WebGLBackground } from './webgl-bg.js';
 import { initAnimations } from './animations.js';
 
 const canvas = document.getElementById('canvas');
@@ -8,9 +7,15 @@ const scrollContent = document.getElementById('main-scroll');
 const preloader = document.getElementById('preloader');
 const preloaderBar = document.getElementById('preloader-bar');
 
+function hidePreloader() {
+    preloader.classList.add('is-hidden');
+}
+
 function setProgress(value) {
     preloaderBar.style.setProperty('--progress', `${Math.min(value, 100)}%`);
 }
+
+setTimeout(hidePreloader, 6000);
 
 async function init() {
     setProgress(10);
@@ -19,15 +24,22 @@ async function init() {
     setProgress(30);
 
     let webgl = null;
-    if (WebGLBackground.isWebGLAvailable()) {
-        webgl = new WebGLBackground(canvas);
-        webgl.init();
-        setProgress(60);
-    } else {
+    try {
+        const { WebGLBackground } = await import('./webgl-bg.js');
+        if (WebGLBackground.isWebGLAvailable()) {
+            webgl = new WebGLBackground(canvas);
+            webgl.init();
+        } else {
+            canvas.style.display = 'none';
+            document.body.classList.add('no-webgl');
+        }
+    } catch (e) {
+        console.warn('WebGL init failed, using fallback:', e);
+        webgl = null;
         canvas.style.display = 'none';
         document.body.classList.add('no-webgl');
-        setProgress(60);
     }
+    setProgress(60);
 
     await document.fonts.ready;
     setProgress(80);
@@ -35,11 +47,8 @@ async function init() {
     initAnimations(scroll);
     setProgress(100);
 
-    setTimeout(() => {
-        preloader.classList.add('is-hidden');
-    }, 400);
+    setTimeout(hidePreloader, 400);
 
-    // Mobile menu toggle
     const menuBtn = document.getElementById('header-menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
     if (menuBtn && mobileMenu) {
@@ -57,4 +66,7 @@ async function init() {
     loop();
 }
 
-init();
+init().catch(e => {
+    console.error('Init failed:', e);
+    hidePreloader();
+});

@@ -3,11 +3,11 @@
   font-weight: 700;
   font-style: normal;
   font-display: swap;
-  src: url("/assets/fonts/GT-Sectra-Fine-Medium.eot");
-  src: url("/assets/fonts/GT-Sectra-Fine-Medium.eot?#iefix") format("eot"),
-    url("/assets/fonts/GT-Sectra-Fine-Medium.woff2") format("woff2"),
-    url("/assets/fonts/GT-Sectra-Fine-Medium.woff") format("woff"),
-    url("/assets/fonts/GT-Sectra-Fine-Medium.ttf") format("truetype");
+  src: url("../assets/fonts/GT-Sectra-Fine-Medium.eot");
+  src: url("../assets/fonts/GT-Sectra-Fine-Medium.eot?#iefix") format("eot"),
+    url("../assets/fonts/GT-Sectra-Fine-Medium.woff2") format("woff2"),
+    url("../assets/fonts/GT-Sectra-Fine-Medium.woff") format("woff"),
+    url("../assets/fonts/GT-Sectra-Fine-Medium.ttf") format("truetype");
 }
 
 @font-face {
@@ -15,11 +15,11 @@
   font-weight: 400;
   font-style: normal;
   font-display: swap;
-  src: url("/assets/fonts/GT-Sectra-Fine-Book.eot");
-  src: url("/assets/fonts/GT-Sectra-Fine-Book.eot?#iefix") format("eot"),
-    url("/assets/fonts/GT-Sectra-Fine-Book.woff2") format("woff2"),
-    url("/assets/fonts/GT-Sectra-Fine-Book.woff") format("woff"),
-    url("/assets/fonts/GT-Sectra-Fine-Book.ttf") format("truetype");
+  src: url("../assets/fonts/GT-Sectra-Fine-Book.eot");
+  src: url("../assets/fonts/GT-Sectra-Fine-Book.eot?#iefix") format("eot"),
+    url("../assets/fonts/GT-Sectra-Fine-Book.woff2") format("woff2"),
+    url("../assets/fonts/GT-Sectra-Fine-Book.woff") format("woff"),
+    url("../assets/fonts/GT-Sectra-Fine-Book.ttf") format("truetype");
 }
 
 @font-face {
@@ -27,11 +27,11 @@
   font-weight: 700;
   font-style: normal;
   font-display: swap;
-  src: url("/assets/fonts/nb_akademie_medium-webfont.eot");
-  src: url("/assets/fonts/nb_akademie_medium-webfont.eot?#iefix") format("eot"),
-    url("/assets/fonts/nb_akademie_medium-webfont.woff2") format("woff2"),
-    url("/assets/fonts/nb_akademie_medium-webfont.woff") format("woff"),
-    url("/assets/fonts/nb_akademie_medium-webfont.ttf") format("truetype");
+  src: url("../assets/fonts/nb_akademie_medium-webfont.eot");
+  src: url("../assets/fonts/nb_akademie_medium-webfont.eot?#iefix") format("eot"),
+    url("../assets/fonts/nb_akademie_medium-webfont.woff2") format("woff2"),
+    url("../assets/fonts/nb_akademie_medium-webfont.woff") format("woff"),
+    url("../assets/fonts/nb_akademie_medium-webfont.ttf") format("truetype");
 }
 
 @font-face {
@@ -39,11 +39,11 @@
   font-weight: 400;
   font-style: normal;
   font-display: swap;
-  src: url("/assets/fonts/nb_akademie_light-webfont.eot");
-  src: url("/assets/fonts/nb_akademie_light-webfont.eot?#iefix") format("eot"),
-    url("/assets/fonts/nb_akademie_light-webfont.woff2") format("woff2"),
-    url("/assets/fonts/nb_akademie_light-webfont.woff") format("woff"),
-    url("/assets/fonts/nb_akademie_light-webfont.ttf") format("truetype");
+  src: url("../assets/fonts/nb_akademie_light-webfont.eot");
+  src: url("../assets/fonts/nb_akademie_light-webfont.eot?#iefix") format("eot"),
+    url("../assets/fonts/nb_akademie_light-webfont.woff2") format("woff2"),
+    url("../assets/fonts/nb_akademie_light-webfont.woff") format("woff"),
+    url("../assets/fonts/nb_akademie_light-webfont.ttf") format("truetype");
 }
 
 html,
@@ -1021,7 +1021,7 @@ html.no-js #main-scroll-indicator {
   fill: #fff;
 }
 
-​#header-content {
+#header-content {
   width: 100%;
   left: 0;
   bottom: 42px;

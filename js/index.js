@@ -227,9 +227,9 @@ function(e, t, n) {
     n(5);
     var i = t.isLocal = !!window.isLocal;
     t.typekitId = "AnZhiYu",
-    t.assetPath = "/assets/",
-    t.cdnPath = "/assets/",
-    t.videoCdnPath = i ? "/assets/": "https://d8d3yaw9yoj7k.cloudfront.net/",
+    t.assetPath = "./assets/",
+    t.cdnPath = "./assets/",
+    t.videoCdnPath = i ? "./assets/": "https://d8d3yaw9yoj7k.cloudfront.net/",
     t.dataFloatType = null,
     t.renderTargetFloatType = null,
     t.useFloatPacking = null,

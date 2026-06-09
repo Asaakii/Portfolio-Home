@@ -8,6 +8,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+        var ua = (navigator.userAgent || navigator.vendor || window.opera).toLowerCase();
+        document.documentElement.className += /(iPad|iPhone|Android)/i.test(ua) ? ' is-mobile' : ' is-desktop';
+        document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+    </script>
     <script type="importmap">
     {
         "imports": {
@@ -24,77 +29,70 @@
     </div>
 
     <!-- Header -->
-    <header id="header">
+    <header id="header" class="font-subheader">
         <div id="header-content">
             <a id="header-logo" aria-label="homepage">Asaakii</a>
             <ul id="header-menu" class="nav">
-                <li class="header-menu-item">
+                <li class="header-menu-item header-item">
                     <a target="_blank" href="https://blog.asaakii.com">
                         <div class="header-menu-item-mask">个人博客</div>
                     </a>
                 </li>
-                <li class="header-menu-item">
+                <li class="header-menu-item header-item">
                     <a target="_blank" href="https://github.com/asaakii">
                         <div class="header-menu-item-mask">GitHub</div>
                     </a>
                 </li>
-                <li class="header-menu-item">
+                <li class="header-menu-item header-item">
                     <a target="_blank" href="mailto:tpittman942@gmail.com">
                         <div class="header-menu-item-mask">联系我</div>
                     </a>
                 </li>
             </ul>
-            <div id="header-menu-btn">
-                <span></span>
-                <span></span>
-            </div>
+            <div id="header-menu-btn"></div>
         </div>
     </header>
 
-    <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu" class="mobile-menu">
-        <ul>
-            <li><a target="_blank" href="https://blog.asaakii.com">个人博客</a></li>
-            <li><a target="_blank" href="https://github.com/asaakii">GitHub</a></li>
-            <li><a target="_blank" href="mailto:tpittman942@gmail.com">联系我</a></li>
-        </ul>
+    <!-- Mobile Menu -->
+    <div id="menu">
+        <div id="menu-content" class="flex-vertical">
+            <ul id="menu-menu">
+                <li class="menu-menu-item"><a target="_blank" href="https://blog.asaakii.com">个人博客</a></li>
+                <li class="menu-menu-item"><a target="_blank" href="https://github.com/asaakii">GitHub</a></li>
+                <li class="menu-menu-item"><a target="_blank" href="mailto:tpittman942@gmail.com">联系我</a></li>
+            </ul>
+        </div>
     </div>
 
     <!-- WebGL Canvas -->
     <canvas id="canvas"></canvas>
 
-    <!-- Cursor Follower -->
-    <div id="cursor-follower"></div>
-
     <!-- Main Content -->
     <div id="app">
-        <div id="main" data-scroll-tooltip="Scroll to begin">
+        <div id="main">
             <div id="main-scroll">
-
                 <!-- Section 1: Hero -->
                 <section id="hero" class="hero is-full">
                     <div class="hero-context flex-vertical">
                         <div class="hero-inner">
-                            <h1 id="hero-title" class="hero-title">
+                            <h1 id="hero-title" class="hero-title" style="visibility: hidden;">
                                 Welcome To Asaakii's Home
                             </h1>
                             <h4 id="hero-desc" class="hero-desc"></h4>
                         </div>
                     </div>
-                    <div id="scroll-indicator">
-                        <div id="scroll-indicator-arrow"></div>
-                    </div>
                 </section>
 
                 <!-- Section 2: Message -->
-                <section id="message" class="is-full">
+                <section id="message" class="is-full margin-bottom-full">
                     <div class="sec-context flex-vertical">
-                        <div class="sec-context-inner is-right darker-bg">
+                        <div class="sec-context-inner is-right darker-bg" style="opacity: 0;">
                             <h3 class="about-sec-title font-header"></h3>
-                            <h4 class="about-sec-subtitle">MESSAGE</h4>
+                            <h4 class="about-sec-subtitle font-header">MESSAGE</h4>
                             <div class="about-sec-desc">
-                                <p class="split-line-mask-effect">你好哇，我是 Asaakii，一个心怀梦想，热爱生活的 Coder...</p>
-                                <p class="split-line-mask-effect">「天堂旅行团」亲爱的，你知道吗？这世界不停开花，我想放进你心里一朵.</p>
+                                你好哇，我是 Asaakii，一个心怀梦想，热爱生活的 Coder...
+                                <br><br>
+                                <b>「天堂旅行团」</b>亲爱的，你知道吗？这世界不停开花，我想放进你心里一朵.
                             </div>
                         </div>
                     </div>
@@ -103,89 +101,150 @@
                 <!-- Section 3: Quote -->
                 <section id="quote" class="is-full">
                     <div class="sec-context flex-vertical">
-                        <h3 class="sec-title split-line-mask-effect">你所热爱的就是你的生活！</h3>
-                        <h4 class="sec-desc split-line-mask-effect">生活明朗，万物可爱。</h4>
+                        <div class="sec-context-inner is-right darker-bg" style="opacity: 0;">
+                            <h3 class="about-sec-subtitle">你所热爱的就是你的生活！</h3>
+                            <h4 class="about-sec-title font-header">生活明朗，万物可爱。</h4>
+                        </div>
                     </div>
                 </section>
+
+                <div class="is-full"></div>
 
                 <!-- Section 4: Featured Cards -->
-                <section id="featured">
-                    <div id="featured-wrapper">
-                        <div id="featured-left">
-                            <h3 class="sec-title split-line-mask-effect">
-                                <span>未来可期</span>
+                <div id="featured">
+                    <div class="sec-context">
+                        <div class="sec-context-inner">
+                            <h3 id="featured-title" class="sec-title font-header split-line-up-effect">
+                                未来可期
                             </h3>
-                            <div class="sec-desc">
-                                <p class="split-line-mask-effect">十年前，我们仰望星空；</p>
-                                <p class="split-line-mask-effect">十年后，我们将俯视大地。</p>
+                            <div id="featured-desc" class="sec-desc font-bold split-line-up-effect">
+                                十年前，我们仰望星空；<br>十年后，我们将俯视大地。
                             </div>
                         </div>
-                        <div id="featured-right">
-                            <a class="featured-item" href="https://blog.asaakii.com" target="_blank">
-                                <div class="featured-item-image">
-                                    <div class="featured-item-image-inner" data-src="images/featured-1.webp"></div>
-                                </div>
-                                <div class="featured-item-context">
-                                    <div class="featured-item-desc font-header-bold split-line-mask-effect">在安静中寻找地坛，而不是在地坛中寻找安静</div>
-                                    <div class="featured-item-client split-line-mask-effect">我在未来等你！</div>
-                                </div>
-                            </a>
-                            <a class="featured-item" href="https://github.com/asaakii" target="_blank">
-                                <div class="featured-item-image">
-                                    <div class="featured-item-image-inner" data-src="images/featured-2.webp"></div>
-                                </div>
-                                <div class="featured-item-context">
-                                    <div class="featured-item-desc font-header-bold split-line-mask-effect">多一份知识便多一份自由的空间</div>
-                                    <div class="featured-item-client split-line-mask-effect">为实现中华民族伟大复兴的中国梦而努力奋斗！</div>
-                                </div>
-                            </a>
-                            <a class="featured-item" href="https://blog.asaakii.com" target="_blank">
-                                <div class="featured-item-image">
-                                    <div class="featured-item-image-inner" data-src="images/featured-3.webp"></div>
-                                </div>
-                                <div class="featured-item-context">
-                                    <div class="featured-item-desc font-header-bold split-line-mask-effect">要有听雨的心情和淋雨的心情</div>
-                                    <div class="featured-item-client split-line-mask-effect">学着去做一个潇洒的NPC！</div>
-                                </div>
-                            </a>
-                            <a class="featured-item" href="https://blog.asaakii.com" target="_blank">
-                                <div class="featured-item-image">
-                                    <div class="featured-item-image-inner" data-src="images/featured-4.webp"></div>
-                                </div>
-                                <div class="featured-item-context">
-                                    <div class="featured-item-desc font-header-bold split-line-mask-effect">在紧张的时间中适当"关机"</div>
-                                    <div class="featured-item-client split-line-mask-effect">与其熬夜，不如对明天抱有期待</div>
-                                </div>
-                            </a>
+                        <div id="featured-items-container">
+                            <div class="featured-item" data-id="img-1">
+                                <a class="featured-item-link" target="_blank" href="https://blog.asaakii.com">
+                                    <div class="featured-item-image" style="border-radius: 25px;">
+                                        <div class="featured-item-image-inner" data-src="images/featured-1.webp"></div>
+                                    </div>
+                                    <div class="featured-item-context">
+                                        <div class="featured-item-desc font-header-bold split-line-mask-effect">
+                                            在安静中寻找地坛，而不是在地坛中寻找安静
+                                        </div>
+                                        <div class="featured-item-client split-line-mask-effect">
+                                            我在未来等你！
+                                        </div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 8">
+                                            <polygon points="6.767 0.603 6.767 5.897 0.871 0 0 0.872 5.894 6.767 0.605 6.767 0.605 8 8 8 8 0.603 6.767 0.603"></polygon>
+                                        </svg>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="featured-item" data-id="img-2">
+                                <a class="featured-item-link" target="_blank" href="https://github.com/asaakii">
+                                    <div class="featured-item-image" style="border-radius: 25px;">
+                                        <div class="featured-item-image-inner" data-src="images/featured-2.webp"></div>
+                                    </div>
+                                    <div class="featured-item-context">
+                                        <div class="featured-item-desc font-header-bold split-line-mask-effect">
+                                            多一份知识便多一份自由的空间
+                                        </div>
+                                        <div class="featured-item-client split-line-mask-effect">
+                                            为实现中华民族伟大复兴的中国梦而努力奋斗！
+                                        </div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 8">
+                                            <polygon points="6.767 0.603 6.767 5.897 0.871 0 0 0.872 5.894 6.767 0.605 6.767 0.605 8 8 8 8 0.603 6.767 0.603"></polygon>
+                                        </svg>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="featured-item" data-id="img-3">
+                                <a class="featured-item-link" target="_blank" href="https://blog.asaakii.com">
+                                    <div class="featured-item-image" style="border-radius: 25px;">
+                                        <div class="featured-item-image-inner" data-src="images/featured-3.webp"></div>
+                                    </div>
+                                    <div class="featured-item-context">
+                                        <div class="featured-item-desc font-header-bold split-line-mask-effect">
+                                            要有听雨的心情和淋雨的心情
+                                        </div>
+                                        <div class="featured-item-client split-line-mask-effect">
+                                            学着去做一个潇洒的NPC！
+                                        </div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 8">
+                                            <polygon points="6.767 0.603 6.767 5.897 0.871 0 0 0.872 5.894 6.767 0.605 6.767 0.605 8 8 8 8 0.603 6.767 0.603"></polygon>
+                                        </svg>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="featured-item" data-id="img-4">
+                                <a class="featured-item-link" target="_blank" href="https://blog.asaakii.com">
+                                    <div class="featured-item-image" style="border-radius: 25px;">
+                                        <div class="featured-item-image-inner" data-src="images/featured-4.webp"></div>
+                                    </div>
+                                    <div class="featured-item-context">
+                                        <div class="featured-item-desc font-header-bold split-line-mask-effect">
+                                            在紧张的时间中适当"关机"
+                                        </div>
+                                        <div class="featured-item-client split-line-mask-effect">
+                                            与其熬夜，不如对明天抱有期待
+                                        </div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 8">
+                                            <polygon points="6.767 0.603 6.767 5.897 0.871 0 0 0.872 5.894 6.767 0.605 6.767 0.605 8 8 8 8 0.603 6.767 0.603"></polygon>
+                                        </svg>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </section>
+                </div>
 
                 <!-- Section 5: Contact -->
-                <section id="contact">
-                    <div class="contact-inner">
-                        <h4 class="contact-column-title split-line-mask-effect">Look for me😃</h4>
-                        <div class="contact-subtitle split-line-mask-effect">世间所有相遇，都是久别重逢🔥</div>
-                        <ul class="contact-list">
-                            <li class="contact-column-item"><a href="https://blog.asaakii.com" target="_blank">博客：https://blog.asaakii.com</a></li>
-                            <li class="contact-column-item"><a href="mailto:tpittman942@gmail.com">Email：tpittman942@gmail.com</a></li>
-                            <li class="contact-column-item"><a href="https://github.com/asaakii" target="_blank">Github：https://github.com/asaakii</a></li>
-                        </ul>
+                <div id="contact">
+                    <div id="contact-main">
+                        <div class="sec-context flex-vertical">
+                            <div class="sec-context-inner darker-bg is-left" style="opacity: 0;">
+                                <h4 id="contact-title">Look for me😃</h4>
+                                <div id="contact-desc">世间所有相遇，都是久别重逢🔥</div>
+                                <div id="contact-columns">
+                                    <div class="contact-column">
+                                        <ul class="nav">
+                                            <li class="contact-column-item"><a href="https://blog.asaakii.com" target="_blank">博客：https://blog.asaakii.com</a></li><br>
+                                            <li class="contact-column-item"><a href="mailto:tpittman942@gmail.com">Email：tpittman942@gmail.com</a></li><br>
+                                            <li class="contact-column-item"><a href="https://github.com/asaakii" target="_blank">Github：https://github.com/asaakii</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </section>
-
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Custom Scrollbar -->
+    <!-- Right Scrollbar -->
     <div id="main-scrollbar">
         <div id="main-scrollbar-indicator"></div>
     </div>
 
-    <!-- GSAP (loaded before module script) -->
+    <!-- Scroll Indicator (left bottom) -->
+    <div id="main-scroll-indicator">
+        <div id="main-scroll-indicator-text">滚动查看更多</div>
+        <div id="main-scroll-indicator-arrow-container">
+            <svg xmlns="http://www.w3.org/2000/svg" width="5" height="40" viewBox="0 0 5 40">
+                <path d="M0,40V0H1V35H5Z"></path>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Cursor Follower -->
+    <div id="cursor-follow" class="font-bold"></div>
+
+    <!-- GSAP -->
     <script src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"></script>
-    <script src="https://unpkg.com/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script type="module" src="js/main.js"></script>
 </body>
 </html>

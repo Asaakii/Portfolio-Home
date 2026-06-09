@@ -3,6 +3,7 @@ import { initAnimations } from './animations.js';
 
 const canvas = document.getElementById('canvas');
 const app = document.getElementById('app');
+const mainEl = document.getElementById('main');
 const scrollContent = document.getElementById('main-scroll');
 const preloader = document.getElementById('preloader');
 const preloaderBar = document.getElementById('preloader-bar');
@@ -15,12 +16,13 @@ function setProgress(value) {
     preloaderBar.style.setProperty('--progress', `${Math.min(value, 100)}%`);
 }
 
+// Safety timeout — always hide preloader after 6s
 setTimeout(hidePreloader, 6000);
 
 async function init() {
     setProgress(10);
 
-    const scroll = new SmoothScroll(app, scrollContent);
+    const scroll = new SmoothScroll(mainEl, scrollContent);
     setProgress(30);
 
     let webgl = null;
@@ -31,13 +33,13 @@ async function init() {
             webgl.init();
         } else {
             canvas.style.display = 'none';
-            document.body.classList.add('no-webgl');
+            document.documentElement.classList.add('no-webgl');
         }
     } catch (e) {
         console.warn('WebGL init failed, using fallback:', e);
         webgl = null;
         canvas.style.display = 'none';
-        document.body.classList.add('no-webgl');
+        document.documentElement.classList.add('no-webgl');
     }
     setProgress(60);
 
@@ -49,12 +51,13 @@ async function init() {
 
     setTimeout(hidePreloader, 400);
 
+    // Mobile menu toggle
     const menuBtn = document.getElementById('header-menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    if (menuBtn && mobileMenu) {
+    const menu = document.getElementById('menu');
+    if (menuBtn && menu) {
         menuBtn.addEventListener('click', () => {
-            menuBtn.classList.toggle('is-active');
-            mobileMenu.classList.toggle('is-active');
+            menuBtn.classList.toggle('is-selected');
+            menu.classList.toggle('is-active');
         });
     }
 

@@ -1,5 +1,5 @@
 import { SmoothScroll } from './scroll.js';
-import { initAnimations } from './animations.js';
+import { initAnimations } from './animations.js?v=20260609-replica';
 
 const canvas = document.getElementById('canvas');
 const app = document.getElementById('app');

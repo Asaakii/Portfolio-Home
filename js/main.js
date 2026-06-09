@@ -27,7 +27,7 @@ async function init() {
 
     let webgl = null;
     try {
-        const { WebGLBackground } = await import('./webgl-bg.js');
+        const { WebGLBackground } = await import('./webgl-bg.js?v=20260609-neon');
         if (WebGLBackground.isWebGLAvailable()) {
             webgl = new WebGLBackground(canvas);
             webgl.init();

@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asaakii</title>
     <link rel="stylesheet" href="css/index.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <script>
         var ua = (navigator.userAgent || navigator.vendor || window.opera).toLowerCase();
         document.documentElement.className += /(iPad|iPhone|Android)/i.test(ua) ? ' is-mobile' : ' is-desktop';
@@ -25,6 +22,7 @@
 <body>
     <!-- Preloader -->
     <div id="preloader">
+        <canvas id="preloader-canvas" aria-hidden="true"></canvas>
         <div id="preloader-bar"></div>
     </div>
 
@@ -125,7 +123,7 @@
                             <div class="featured-item" data-id="img-1">
                                 <a class="featured-item-link" target="_blank" href="https://blog.asaakii.com">
                                     <div class="featured-item-image" style="border-radius: 25px;">
-                                        <div class="featured-item-image-inner" data-src="images/featured-1.webp"></div>
+                                        <div class="featured-item-image-inner" data-src="assets/images/featured-1.svg"></div>
                                     </div>
                                     <div class="featured-item-context">
                                         <div class="featured-item-desc font-header-bold split-line-mask-effect">
@@ -144,7 +142,7 @@
                             <div class="featured-item" data-id="img-2">
                                 <a class="featured-item-link" target="_blank" href="https://github.com/asaakii">
                                     <div class="featured-item-image" style="border-radius: 25px;">
-                                        <div class="featured-item-image-inner" data-src="images/featured-2.webp"></div>
+                                        <div class="featured-item-image-inner" data-src="assets/images/featured-2.svg"></div>
                                     </div>
                                     <div class="featured-item-context">
                                         <div class="featured-item-desc font-header-bold split-line-mask-effect">
@@ -163,7 +161,7 @@
                             <div class="featured-item" data-id="img-3">
                                 <a class="featured-item-link" target="_blank" href="https://blog.asaakii.com">
                                     <div class="featured-item-image" style="border-radius: 25px;">
-                                        <div class="featured-item-image-inner" data-src="images/featured-3.webp"></div>
+                                        <div class="featured-item-image-inner" data-src="assets/images/featured-3.svg"></div>
                                     </div>
                                     <div class="featured-item-context">
                                         <div class="featured-item-desc font-header-bold split-line-mask-effect">
@@ -182,7 +180,7 @@
                             <div class="featured-item" data-id="img-4">
                                 <a class="featured-item-link" target="_blank" href="https://blog.asaakii.com">
                                     <div class="featured-item-image" style="border-radius: 25px;">
-                                        <div class="featured-item-image-inner" data-src="images/featured-4.webp"></div>
+                                        <div class="featured-item-image-inner" data-src="assets/images/featured-4.svg"></div>
                                     </div>
                                     <div class="featured-item-context">
                                         <div class="featured-item-desc font-header-bold split-line-mask-effect">
@@ -239,6 +237,9 @@
             </svg>
         </div>
     </div>
+
+    <!-- Sound Button -->
+    <a id="snd-btn" class="cache" aria-label="sound toggle"></a>
 
     <!-- Cursor Follower -->
     <div id="cursor-follow" class="font-bold"></div>

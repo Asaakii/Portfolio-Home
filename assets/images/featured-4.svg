@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Personal neon home</title>
+  <desc id="desc">Dark personal homepage composition with layered cards and neon road lights.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#020319"/>
+      <stop offset=".55" stop-color="#06124a"/>
+      <stop offset="1" stop-color="#02040d"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="9" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <g opacity=".58" filter="url(#glow)">
+    <path d="M800 450 L-80 190" stroke="#8ccfff" stroke-width="6"/>
+    <path d="M800 450 L1720 190" stroke="#ff53ba" stroke-width="6"/>
+    <path d="M800 498 L80 840" stroke="#8ccfff" stroke-width="5"/>
+    <path d="M800 498 L1520 840" stroke="#ff53ba" stroke-width="5"/>
+    <circle cx="800" cy="468" r="78" fill="#68d7ff" opacity=".2"/>
+  </g>
+  <g transform="translate(304 160)">
+    <rect x="90" y="50" width="850" height="430" rx="36" fill="#050914" opacity=".86" stroke="#fff" stroke-opacity=".08"/>
+    <text x="150" y="190" fill="#f6f7ff" font-family="Georgia, serif" font-size="76">Welcome Home</text>
+    <rect x="154" y="244" width="420" height="14" rx="7" fill="#63769f"/>
+    <rect x="154" y="286" width="320" height="14" rx="7" fill="#63769f"/>
+    <rect x="154" y="350" width="162" height="52" rx="26" fill="#168bff"/>
+    <rect x="620" y="244" width="250" height="152" rx="26" fill="#0a2545" stroke="#70d8ff" stroke-opacity=".38"/>
+    <path d="M662 352 C704 288 756 366 804 300 C832 262 858 276 878 238" fill="none" stroke="#ff5ac1" stroke-width="8" filter="url(#glow)"/>
+  </g>
+  <g opacity=".42">
+    <rect x="250" y="596" width="360" height="80" rx="40" fill="#07142c"/>
+    <rect x="650" y="620" width="420" height="80" rx="40" fill="#120a2d"/>
+    <rect x="1120" y="584" width="260" height="80" rx="40" fill="#07142c"/>
+  </g>
+</svg>

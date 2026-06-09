@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Neon code workspace</title>
+  <desc id="desc">Dark terminal and code editor composition with electric blue and magenta highlights.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#02030a"/>
+      <stop offset=".45" stop-color="#09164a"/>
+      <stop offset="1" stop-color="#1c0633"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <g opacity=".42" filter="url(#glow)">
+    <path d="M92 140 L560 92" stroke="#7ecbff" stroke-width="7"/>
+    <path d="M1030 118 L1560 72" stroke="#ff4fb6" stroke-width="7"/>
+    <path d="M120 805 L820 700" stroke="#7ecbff" stroke-width="5"/>
+    <path d="M920 748 L1510 572" stroke="#ff4fb6" stroke-width="5"/>
+  </g>
+  <g transform="translate(130 110)">
+    <rect width="1240" height="650" rx="28" fill="#050915" opacity=".94" stroke="#ffffff" stroke-opacity=".08"/>
+    <rect width="1240" height="54" rx="28" fill="#10182b"/>
+    <circle cx="42" cy="27" r="8" fill="#ff5d7a"/>
+    <circle cx="72" cy="27" r="8" fill="#ffd166"/>
+    <circle cx="102" cy="27" r="8" fill="#67e8a1"/>
+    <g transform="translate(66 105)" font-family="Menlo, Monaco, monospace" font-size="31" fill="#d8e5ff">
+      <text y="0" fill="#6ee7ff">const</text>
+      <text x="104" y="0">portfolio = createReplica();</text>
+      <text y="64" fill="#ff6ec7">portfolio</text>
+      <text x="150" y="64">.addHero("neon-speed");</text>
+      <text y="128" fill="#7dd3fc">portfolio</text>
+      <text x="150" y="128">.addCards(projects);</text>
+      <text y="192" fill="#a7f3d0">await</text>
+      <text x="95" y="192">portfolio.render();</text>
+    </g>
+    <g transform="translate(770 96)">
+      <rect width="360" height="460" rx="24" fill="#081426" stroke="#26b8ff" stroke-opacity=".3"/>
+      <rect x="34" y="42" width="240" height="12" rx="6" fill="#7ecbff"/>
+      <rect x="34" y="92" width="292" height="10" rx="5" fill="#455d87"/>
+      <rect x="34" y="128" width="220" height="10" rx="5" fill="#455d87"/>
+      <rect x="34" y="186" width="292" height="134" rx="18" fill="#0d2446"/>
+      <path d="M68 282 C116 216 166 300 218 234 C248 196 282 214 314 176" fill="none" stroke="#ff56b7" stroke-width="8" filter="url(#glow)"/>
+      <rect x="34" y="365" width="122" height="42" rx="21" fill="#168bff"/>
+    </g>
+  </g>
+</svg>

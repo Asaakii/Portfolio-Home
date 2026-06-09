@@ -367,6 +367,7 @@ h1.hero-title {
     margin: 0 0 1vh 0;
     color: #fff;
     will-change: filter;
+    text-shadow: 0 0 18px rgba(0, 0, 0, 0.95), 0 0 42px rgba(0, 0, 0, 0.75);
 }
 
 .hero-desc {
@@ -904,10 +905,34 @@ html.no-webgl body {
 
 @media (max-width: 420px) {
     .hero-context { padding: 35px 35px; }
-    h1.hero-title { font-size: 2.6em; }
+    h1.hero-title {
+        font-size: 1.9em;
+        line-height: 1.08em;
+        overflow-wrap: normal;
+    }
+
+    #featured-title {
+        font-size: 3em;
+        margin-bottom: 3vh;
+    }
+
+    #featured-desc {
+        top: 0;
+        width: 100%;
+        margin-bottom: 5vh;
+    }
+
+    .featured-item {
+        font-size: 0.8em;
+    }
+
+    .featured-item-context,
+    .featured-item-client {
+        padding: 20px 20px;
+    }
 }
 
 @media (max-width: 400px) {
-    h1.hero-title { font-size: 2.3em; }
+    h1.hero-title { font-size: 1.8em; }
     .hero-desc { font-size: 0.6em; }
 }

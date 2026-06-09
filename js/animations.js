@@ -33,22 +33,36 @@ function createHeroTitleAnimation(titleElement) {
     titleElement.textContent = '';
     titleElement.style.visibility = 'visible';
 
-    const chars = text.split('');
-    const spans = chars.map(char => {
-        const wrapper = document.createElement('span');
-        wrapper.style.display = 'inline-block';
-        wrapper.style.overflow = 'hidden';
+    const spans = [];
+    const parts = text.split(/(\s+)/);
+    parts.forEach(part => {
+        if (/^\s+$/.test(part)) {
+            titleElement.appendChild(document.createTextNode(' '));
+            return;
+        }
 
-        const inner = document.createElement('span');
-        inner.style.display = 'inline-block';
-        inner.innerHTML = char === ' ' ? '&nbsp;' : char;
-        inner.style.transform = 'rotateX(90deg)';
-        inner.style.transformOrigin = '50% 50%';
-        inner.style.opacity = '0';
+        const word = document.createElement('span');
+        word.style.display = 'inline-block';
+        word.style.whiteSpace = 'nowrap';
 
-        wrapper.appendChild(inner);
-        titleElement.appendChild(wrapper);
-        return inner;
+        part.split('').forEach(char => {
+            const wrapper = document.createElement('span');
+            wrapper.style.display = 'inline-block';
+            wrapper.style.overflow = 'hidden';
+
+            const inner = document.createElement('span');
+            inner.style.display = 'inline-block';
+            inner.textContent = char;
+            inner.style.transform = 'rotateX(90deg)';
+            inner.style.transformOrigin = '50% 50%';
+            inner.style.opacity = '0';
+
+            wrapper.appendChild(inner);
+            word.appendChild(wrapper);
+            spans.push(inner);
+        });
+
+        titleElement.appendChild(word);
     });
 
     return spans;

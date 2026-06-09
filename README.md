@@ -12,7 +12,7 @@
 - **TweenLite (GSAP)** — 缓动动画
 - **Vanilla HTML / CSS / JS** — 无框架，无构建工具
 
-> `js/index.js` 是 webpack 打包的压缩产物，包含所有业务逻辑（滚动系统、页面路由、WebGL 场景管理、音频交互等）。
+> `js/index.js` 是 webpack 打包的压缩产物，包含所有业务逻辑（滚动系统、页面路由、WebGL 场景管理等）。
 
 ## 本地运行
 
@@ -40,7 +40,6 @@ npx serve .
 │   └── TweenLite.js                # GSAP TweenLite 缓动库
 └── assets/
     ├── fonts/                      # 自定义字体（GT-Sectra-Fine / NB Akademie，woff2 + 兼容格式）
-    ├── audios/                     # 交互音效（hover、obstacle、under_water）
     └── images/
         ├── female.glb              # 3D 角色模型
         ├── animation.glb           # 角色动画数据

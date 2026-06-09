@@ -1450,139 +1450,17 @@ function(e, t, n) {
     u = n(8),
     c = n(37);
     t.init = function(e) {
-        if (!d || m) return;
-        document.addEventListener("visibilitychange", k, !1);
-        try {
-            m = new l,
-            M = m.createBiquadFilter(),
-            P = m.createPanner(),
-            T = m.createGain(),
-            F() ? a.onDowned.addOnce(E) : t.gestureVolumeRatio = 0.5,
-            M.connect(P),
-            P.connect(T),
-            T.connect(m.destination),
-            (f = document.getElementById("snd-btn")).style.display = "block",
-            (h = document.createElement("canvas")).width = h.height = D * L,
-            f.appendChild(h),
-            v = h.getContext("2d"),
-            a.add(f, "click", O);
-            var n = 0,
-            i = 0;
-            for (var r in x) x[r] || n++;
-            if (n > 0) {
-                var o = function() {++i === n && e && e()
-                };
-                for (var s in x) z(s, o)
-            } else e && e()
-        } catch(e) {}
+        e && e()
     },
-    t.preload = function(e) {
-        if (!d || !m) return;
-    
-        if (e.startsWith("https://") || e.startsWith("http://")) {
-            o.loader.add(e, {
-                type: "xhr",
-                responseType: "arraybuffer",
-                _onLoad: function() {
-                    var t = c.ITEM_CLASSES.xhr.prototype._onLoad.bind(this);
-                    p[e] = this.xmlhttp.response;
-                    m ? z(e, t) : t();
-                }
-            });
-            return;
-        }
-    
-        p[e = e || "default"] || (p[e] = !0, o.loader.add(i.cdnPath + "audios/" + e + ".mp3", {
-            type: "xhr",
-            responseType: "arraybuffer",
-            _onLoad: function() {
-                var t = c.ITEM_CLASSES.xhr.prototype._onLoad.bind(this);
-                p[e] = this.xmlhttp.response;
-                m ? z(e, t) : t();
-            }
-        }));
-    },    
-    t.isRequiredGesture = F,
-    t.play = function(e) {
-        if (!d || !m) return;
-        R !== (e = e || "default") && (R &&
-        function(e) {
-            if (y[e]) {
-                y[e] = !1,
-                S[e] && S[e].kill();
-                var t = {
-                    onComplete: function() {
-                        b[e] && (b[e] = !1, _[e].disconnect(), x[e].disconnect(), x[e].stop(x[e].currentTime))
-                    }
-                };
-                t[e] = 0,
-                S[e] = u.to(w, 1.5, t)
-            }
-        } (R), R = e,
-        function(e) {
-            if (!y[e]) {
-                if (y[e] = !0, !b[e]) {
-                    b[e] = !0;
-                    var t = x[e] = m.createBufferSource();
-                    t.buffer = g[e],
-                    t.loop = !0,
-                    t.connect(_[e]),
-                    t.start(0),
-                    _[e].connect(M)
-                }
-                S[e] && S[e].kill(),
-                w[e] = 0;
-                var n = {};
-                n[e] = 1,
-                C && (n.delay = .5),
-                S[e] = u.to(w, 1.5, n)
-            }
-        } (e));
-        C = !1
+    t.preload = function(e) {},
+    t.isRequiredGesture = function() {
+        return ! 1
     },
-    t.playEffect = function(e) {
-        if (!d || !m) return;
-        var t = g[e];
-        if (t) {
-            var n = m.createBufferSource();
-            n.buffer = t,
-            n.connect(P),
-            n.addEventListener("ended",
-            function() {
-                n.disconnect()
-            }),
-            n.start(0)
-        }
-    },
-    t.update = function(e) {
-        if (!d || !m) return;
-        var n = t.volume * t.gestureVolumeRatio;
-        for (var i in _) {
-            var r = _[i];
-            r.gain.value = w[i]
-        }
-        P.setPosition(.75 * (o.elasticMouse.x / o.width * 2 - 1), 1 - o.elasticMouse.y / o.height * 2 * .75, -1),
-        T.gain.value = n,
-        t.distortion += .05 * (t.targetDistortion - t.distortion);
-        var a = m.sampleRate / 2,
-        u = Math.log(a / 40) / Math.LN2,
-        c = Math.pow(2, u * s.map(t.distortion, 1, 0, -.85, 0));
-        M.frequency.value = s.clamp(a * c, 40, a),
-        x[R];
-        var l = n;
-        v.save(),
-        v.scale(L, L),
-        v.clearRect(0, 0, D, D),
-        v.fillStyle = "#fff";
-        for (var f = 0; f < 7; f++) {
-            var h = 3 + 8 * (.5 * Math.sin( - 6 * A + .6 * f) + .5) * l;
-            v.fillRect(3 * f, D - h, 1, h)
-        }
-        v.restore(),
-        A += e
-    };
-    var l = window.AudioContext || window.webkitAudioContext,
-    d = !r.isMobile;
+    t.play = function(e) {},
+    t.playEffect = function(e) {},
+    t.update = function(e) {};
+    var l = null,
+    d = !1;
     t.volume = 0.5,
     t.visibleVolume = 0.5,
     t.distortion = 0,
@@ -1613,16 +1491,7 @@ function(e, t, n) {
         return ! (!d || !m || "suspended" !== m.state)
     }
     function z(e, t) {
-        g[e] || (g[e] = !0, m.decodeAudioData(p[e],
-        function(n) {
-            g[e] = n,
-            _[e] = m.createGain(),
-            w[e] = 0,
-            t && t()
-        },
-        function() {
-            t && t()
-        }))
+        t && t()
     }
     function E() {
         d && m && (m && m.resume(), u.to(t, 1, {
@@ -1665,8 +1534,7 @@ function(e, t, n) {
             domCaches: {},
             useHeroTextEffect: !0,
             currentDom: null,
-            currentRefId: "",
-            audioId: "default"
+            currentRefId: ""
         },
         e)
     }
@@ -4471,20 +4339,11 @@ function(e, t, n) {
     var i, r = n(14),
     o = n(7);
     function a(e, t) {
-        if (e) {
-            this.loadThrough = !t || t.loadThrough === i || t.loadThrough,
-            s.constructor.apply(this, arguments);
-            try {
-                this.content = new Audio
-            } catch(e) {
-                this.content = document.createElement("audio")
-            }
-            this.crossOrigin && (this.content.crossOrigin = this.crossOrigin)
-        }
+        e && s.constructor.apply(this, arguments)
     }
     e.exports = a,
-    a.type = "audio",
-    a.extensions = ["mp3", "ogg"],
+    a.type = "disabled-audio",
+    a.extensions = [],
     o.register(a),
     a.retrieve = function(e) {
         return ! 1
@@ -10409,32 +10268,11 @@ function(e, t, n) {
     c = n(28),
         l = n(19);
     function d() {
-        // var audioLinks = [
-        //     "https://npm.elemecdn.com/anzhiyu-music@1.0.2/晴天/晴天.mp3",
-        //     "https://npm.elemecdn.com/anzhiyu-music@1.0.2/七里香/七里香.mp3",
-        //     "https://npm.elemecdn.com/anzhiyu-music-jay@1.0.1/花海/花海.flac",
-        //     "https://npm.elemecdn.com/anzhiyu-music-jay@1.0.1/明明就/明明就.flac",
-        //     "https://ik.imagekit.io/anzhiyu/about_HPE38qcB2.mp3?updatedAt=1691911009136",
-        // ];
-        var audioLinks = [
-            // "h"+"t"+"t"+"p"+"s"+":"+"//npm.e"+"l"+"e"+"mec"+"dn.c"+"om/a"+"nz"+"hi"+"y"+"u-m"+"us"+"ic"+"@1"+"."+"0"+"."+"2"+"/晴天/晴天.mp3",
-            // "h"+"t"+"t"+"p"+"s"+":"+"//npm.e"+"l"+"e"+"mec"+"dn.c"+"om/a"+"nz"+"hi"+"y"+"u-m"+"us"+"ic"+"@1"+"."+"0"+"."+"2"+"/七里香/七里香.mp3",
-            // "h"+"t"+"t"+"p"+"s"+":"+"//npm.e"+"l"+"e"+"mec"+"dn.c"+"om/a"+"nz"+"hi"+"y"+"u-m"+"us"+"ic-j"+"ay"+"@1"+"."+"0"+"."+"1"+"/花海/花海.flac",
-            // "h"+"t"+"t"+"p"+"s"+":"+"//npm.e"+"l"+"e"+"mec"+"dn.c"+"om/a"+"nz"+"hi"+"y"+"u-m"+"us"+"ic-j"+"ay"+"@1"+"."+"0"+"."+"1"+"/明明就/明明就.flac",
-            "h"+"t"+"t"+"p"+"s"+":"+"//ik.i"+"ma"+"geki"+"t.i"+"o/a"+"nz"+"hi"+"y"+"u/a"+"bout_HPE38qcB2.mp3?updatedAt=1691911009136",
-        ];
-    
-        // 随机选择一个音频链接
-        var randomIndex = Math.floor(Math.random() * audioLinks.length);
-        var randomAudioLink = audioLinks[randomIndex];
-    
-        // 将随机选择的链接用于您的代码
         f.constructor.call(this, {
             id: "about",
             path: "",
             domRect: null,
-            aliases: ["about"],
-            audioId: randomAudioLink
+            aliases: ["about"]
         })
     }
     var f = n(18).prototype,

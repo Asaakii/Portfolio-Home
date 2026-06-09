@@ -836,25 +836,6 @@ html.is-mobile #cursor-follow {
   display: none;
 }
 
-#snd-btn {
-  display: none;
-  position: absolute;
-  width: 60px;
-  height: 60px;
-  right: 60px;
-  bottom: 30px;
-  margin-right: -25px;
-  margin-bottom: -20px;
-  cursor: pointer;
-}
-
-#snd-btn canvas {
-  width: 20px;
-  height: 20px;
-  margin-left: 20px;
-  margin-top: 20px;
-}
-
 @media (max-width: 1600px) {
   body {
     font-size: 0.8em;

@@ -1450,148 +1450,70 @@ function(e, t, n) {
     u = n(8),
     c = n(37);
     t.init = function(e) {
-        if (!d || m) return e && e();
-        document.addEventListener("visibilitychange", k, !1);
-        try {
-            m = new l,
-            M = m.createBiquadFilter(),
-            P = m.createPanner(),
-            T = m.createGain(),
-            t.gestureVolumeRatio = 0,
-            M.connect(P),
-            P.connect(T),
-            T.connect(m.destination),
-            f = document.getElementById("snd-btn"),
-            f && (f.style.display = "block", f.setAttribute("aria-pressed", "false"), f.setAttribute("aria-label", "开启音频"), f.classList.remove("is-on")),
-            h = document.createElement("canvas"),
-            h.width = h.height = D * L,
-            f && f.appendChild(h),
-            v = h.getContext("2d");
-            var n = 0,
-            i = 0;
-            for (var r in x) x[r] || n++;
-            if (n > 0) {
-                var o = function() {++i === n && e && e()
-                };
-                for (var s in x) z(s, o)
-            } else e && e()
-        } catch(n) {
-            e && e()
-        }
+        if (!d) return e && e();
+        f = document.getElementById("snd-btn"),
+        f && (f.style.display = "block", f.setAttribute("aria-pressed", "false"), f.setAttribute("aria-label", "开启音频"), f.classList.remove("is-on")),
+        h = document.createElement("canvas"),
+        h.width = h.height = D * L,
+        f && f.appendChild(h),
+        v = h.getContext("2d");
+        e && e()
     },
     t.preload = function(e) {
-        if (!d || !m || !e) return;
-        if (e.startsWith("https://") || e.startsWith("http://")) {
-            p[e] || (p[e] = !0, o.loader.add(e, {
-                type: "xhr",
-                responseType: "arraybuffer",
-                _onLoad: function() {
-                    var t = c.ITEM_CLASSES.xhr.prototype._onLoad.bind(this);
-                    p[e] = this.xmlhttp.response,
-                    m ? z(e, t) : t()
-                }
-            }));
-            return
+        if (!d || !e) return;
+        if (e.startsWith("https://") || e.startsWith("http://"))
+            p[e] = e;
+        else {
+            e = e || "default";
+            p[e] = i.cdnPath + "audios/" + e + ".mp3"
         }
-        p[e = e || "default"] || (p[e] = !0, o.loader.add(i.cdnPath + "audios/" + e + ".mp3", {
-            type: "xhr",
-            responseType: "arraybuffer",
-            _onLoad: function() {
-                var t = c.ITEM_CLASSES.xhr.prototype._onLoad.bind(this);
-                p[e] = this.xmlhttp.response,
-                m ? z(e, t) : t()
-            }
-        }))
     },
     t.isRequiredGesture = F,
     t.play = function(e) {
-        if (!d || !m) return;
         N = e = e || "default";
-        if (!t.userEnabled) return;
-        R !== e && (R &&
-        function(e) {
-            if (y[e]) {
-                y[e] = !1,
-                S[e] && S[e].kill();
-                var t = {
-                    onComplete: function() {
-                        b[e] && (b[e] = !1, _[e].disconnect(), x[e].disconnect(), x[e].stop(x[e].currentTime))
-                    }
-                };
-                t[e] = 0,
-                S[e] = u.to(w, 1.5, t)
-            }
-        } (R), R = e,
-        function(e) {
-            if (!y[e] && g[e] && _[e]) {
-                if (y[e] = !0, !b[e]) {
-                    b[e] = !0;
-                    var t = x[e] = m.createBufferSource();
-                    t.buffer = g[e],
-                    t.loop = !0,
-                    t.connect(_[e]),
-                    t.start(0),
-                    _[e].connect(M)
-                }
-                S[e] && S[e].kill(),
-                w[e] = 0;
-                var n = {};
-                n[e] = 1,
-                C && (n.delay = .5),
-                S[e] = u.to(w, 1.5, n)
-            }
-        } (e));
-        C = !1
+        if (!d || !t.userEnabled || !m) return;
+        if (R === e) return;
+        R = e;
+        if (p[e]) {
+            S._ && S._.kill();
+            m.src = p[e];
+            m.volume = 0;
+            m.play().catch(function(){});
+            S._ = u.to(m, 1.5, {volume: t.volume})
+        }
     },
     t.playEffect = function(e) {
-        if (!d || !m || !t.userEnabled) return;
-        var t = g[e];
-        if (t) {
-            var n = m.createBufferSource();
-            n.buffer = t,
-            n.connect(P),
-            n.addEventListener("ended",
-            function() {
-                n.disconnect()
-            }),
-            n.start(0)
-        }
+        if (!d || !t.userEnabled || !p[e]) return;
+        var n = new Audio(p[e]);
+        n.volume = t.volume;
+        n.play().catch(function(){})
     },
     t.toggleUserAudio = function() {
         t.userEnabled = !t.userEnabled,
         f && (f.classList.toggle("is-on", t.userEnabled), f.setAttribute("aria-pressed", t.userEnabled ? "true": "false"), f.setAttribute("aria-label", t.userEnabled ? "关闭音频": "开启音频"));
-        if (!d || !m) return;
-        t.userEnabled ? (E(), N && t.play(N)) : (R &&
-        function(e) {
-            if (y[e]) {
-                y[e] = !1,
-                S[e] && S[e].kill(),
-                b[e] && (b[e] = !1, _[e].disconnect(), x[e].disconnect(), x[e].stop(x[e].currentTime))
+        if (!d) return;
+        if (!m) {
+            m = new Audio();
+            m.loop = !0;
+            document.addEventListener("visibilitychange", k, !1)
+        }
+        if (t.userEnabled) {
+            var e = N || "default";
+            R = e;
+            if (p[e]) {
+                S._ && S._.kill();
+                m.src = p[e];
+                m.volume = 0;
+                m.play().catch(function(){});
+                S._ = u.to(m, 1.5, {volume: t.volume})
             }
-        } (R), R = "")
+        } else {
+            S._ && S._.kill();
+            S._ = u.to(m, 1.5, {volume: 0, onComplete: function() { m.pause() }});
+            R = ""
+        }
     },
     t.update = function(e) {
-        if (!d || !m) return;
-        var n = t.userEnabled ? t.volume * t.gestureVolumeRatio: 0;
-        for (var i in _) {
-            var r = _[i];
-            r.gain.value = w[i]
-        }
-        P.setPosition(.75 * (o.elasticMouse.x / o.width * 2 - 1), 1 - o.elasticMouse.y / o.height * 2 * .75, -1),
-        T.gain.value = n,
-        t.distortion += .05 * (t.targetDistortion - t.distortion);
-        var a = m.sampleRate / 2,
-        u = Math.log(a / 40) / Math.LN2,
-        c = Math.pow(2, u * s.map(t.distortion, 1, 0, -.85, 0));
-        M.frequency.value = s.clamp(a * c, 40, a),
-        x[R];
-        var l = n;
-        v && (v.save(), v.scale(L, L), v.clearRect(0, 0, D, D), v.fillStyle = "#fff");
-        for (var f = 0; v && f < 7; f++) {
-            var h = 3 + 8 * (.5 * Math.sin( - 6 * A + .6 * f) + .5) * l;
-            v.fillRect(3 * f, D - h, 1, h)
-        }
-        v && v.restore(),
         A += e
     };
     var l = window.AudioContext || window.webkitAudioContext,
@@ -1623,31 +1545,20 @@ function(e, t, n) {
     I = !1,
     A = 0,
     N = "",
+    G = 0,
     D = 20,
     L = r.isRetina ? 2 : 1;
     function F() {
-        return ! (!d || !m || "suspended" !== m.state)
+        return !1
     }
     function z(e, n) {
-        g[e] || (g[e] = !0, m.decodeAudioData(p[e],
-        function(i) {
-            g[e] = i,
-            _[e] = m.createGain(),
-            w[e] = 0,
-            t.userEnabled && N === e && t.play(e),
-            n && n()
-        },
-        function() {
-            n && n()
-        }))
+        n && n()
     }
-    function E() {
-        d && m && (m && m.resume(), u.to(t, 1, {
-            gestureVolumeRatio: 0.5
-        }))
-    }
-    function k(e) {
-        d && m && (t.visibleVolume = 1 - this.hidden, T.gain.value = t.volume * t.visibleVolume)
+    function E() {}
+    function k() {
+        if (d && m && t.userEnabled) {
+            document.hidden ? m.pause() : m.play().catch(function(){})
+        }
     }
     function O() {
         t.toggleUserAudio()
@@ -5136,7 +5047,8 @@ function(e, t, n) {
         this.scene.add(c.bgMesh),
         l.init(this),
         this.scene.add(l.mesh),
-        this.precompile()
+        this.precompile();
+        for (var e = 0; e < 30; e++) l.update(.016);
     },
     v.resize = function() {
         h.resize.call(this)
@@ -5880,8 +5792,8 @@ function(e, t, n) {
             onLoad: function(t) {
                 a.add(t, i.isMobile ? 256 : 544, i.isMobile ? 256 : 306,
                 function(t) {
-                    // e.thumb = t,
-                    // e.imageContainerInner.appendChild(t)
+                    e.thumb = t,
+                    e.imageContainerInner.appendChild(t)
                 })
             }
         })
@@ -5928,10 +5840,10 @@ function(e, t, n) {
                         n.style.opacity = i.isMobile ? 0.5 : 1
                     },
                     50), setTimeout(function() {
-                        // t.parentNode.removeChild(t),
-                        // e.thumb = null
+                        t && t.parentNode && t.parentNode.removeChild(t),
+                        e.thumb = null
                     },
-                    1e3)) : (n.style.opacity = i.isMobile ? 0.5 : 1, t.parentNode.removeChild(t), e.thumb = null)
+                    1e3)) : (n.style.opacity = i.isMobile ? 0.5 : 1, t && t.parentNode && t.parentNode.removeChild(t), e.thumb = null)
                 }
             })
         }

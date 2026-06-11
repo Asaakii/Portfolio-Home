@@ -57,9 +57,9 @@ export const projects: Project[] = [
     period: '2026.03 — 至今',
     year: '2026',
     summary:
-      '基于 LangGraph 编排 9 条业务链的 Multi-Agent 协同决策系统，融合 RAG 知识库与结构化数据双通道，通过 6 层质量门禁实现从资料接收到 Word 报告交付的全自动化链路。',
+      '基于 LangGraph 编排 9 条业务链的主 Agent + Subagent 协同决策系统，融合 RAG 知识库与结构化数据双通道，通过 6 层质量门禁实现从资料接收到 Word 报告交付的全自动化链路。',
     icon: '🤖',
-    categoryLabel: 'MULTI-AGENT SYSTEM',
+    categoryLabel: 'AGENT + SUBAGENT',
     gradientFrom: '#f0f4ff',
     gradientTo: '#e8ecf8',
     categoryColor: '#8893b0',

@@ -1222,11 +1222,11 @@ html.is-menu-visible #header-menu-btn::after {
 }
 
 #snd-btn.is-on .snd-btn-ring {
-  animation: audioOrbit 1.4s linear infinite;
+  animation: audioOrbit 4s linear infinite;
 }
 
 #snd-btn.is-on .snd-btn-note {
-  animation: audioNoteOrbit 1.4s linear infinite;
+  animation: audioNoteOrbit 4s linear infinite;
 }
 
 #snd-btn.is-on .snd-btn-slash {

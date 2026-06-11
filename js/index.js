@@ -1495,9 +1495,21 @@ function(e, t, n) {
         if (!m) {
             m = new Audio();
             m.loop = !0;
+            m.crossOrigin = "anonymous";
+            try {
+                T = new l();
+                M = T.createBiquadFilter();
+                var src = T.createMediaElementSource(m);
+                src.connect(M);
+                M.connect(T.destination)
+            } catch(e) {
+                T = null;
+                M = null
+            }
             document.addEventListener("visibilitychange", k, !1)
         }
         if (t.userEnabled) {
+            T && T.state === "suspended" && T.resume();
             var e = N || "default";
             R = e;
             if (p[e]) {
@@ -1514,7 +1526,13 @@ function(e, t, n) {
         }
     },
     t.update = function(e) {
-        A += e
+        A += e;
+        if (!T || !M) return;
+        t.distortion += .05 * (t.targetDistortion - t.distortion);
+        var a = T.sampleRate / 2,
+        n = Math.log(a / 40) / Math.LN2,
+        c = Math.pow(2, n * s.map(t.distortion, 1, 0, -.85, 0));
+        M.frequency.value = s.clamp(a * c, 40, a)
     };
     var l = window.AudioContext || window.webkitAudioContext,
     d = !r.isMobile;

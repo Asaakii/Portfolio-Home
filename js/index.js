@@ -2489,7 +2489,8 @@ function(e, t, n) {
         t.currPathInfo = t.nextPathInfo = ie(te(window.location.href)),
         t.currPage = t.nextPage = e.aliasInfo.page,
         t.currPage.preStart(e, M),
-        l.preload(t.currPage.audioId);
+        l.preload(t.currPage.audioId),
+        l.play(t.currPage.audioId);
         for (var n = 0,
         i = w.length; n < i; n++) {
             var r = w[n];

@@ -3,7 +3,7 @@ import Layout from './Layout.astro';
 import SectionLabel from '../components/SectionLabel.astro';
 import MetricsGrid from '../components/MetricsGrid.astro';
 import TechTags from '../components/TechTags.astro';
-import ArchitectureDiagram from '../components/ArchitectureDiagram.tsx';
+import HeroPipeline from '../components/HeroPipeline.astro';
 import FadeIn from '../components/FadeIn.tsx';
 import { getProject, getAdjacentProjects } from '../data/projects';
 
@@ -14,72 +14,179 @@ interface Props {
 const { slug } = Astro.props;
 const project = getProject(slug)!;
 const { prev, next } = getAdjacentProjects(slug);
+
+const pipelineSubtitles: Record<string, string> = {
+  'county-agent': 'County Agent · 从资料接收到报告交付',
+  'ai-assistant': 'RAG Pipeline · 从提问到溯源回答',
+  'smart-platform': 'Integration · 从子系统到统一大屏',
+  'data-collection': 'IoT Pipeline · 从设备到可视化',
+};
 ---
 
 <Layout title={`${project.title} — Asaakii`} showBack>
   <main class="mx-auto max-w-5xl px-6 md:px-10">
+
+    <!-- Hero: 2-col on desktop, pipeline on right -->
     <FadeIn client:load>
-      <section class="pb-10 pt-16 md:pt-20">
-        <div class="mb-3 text-[10px] uppercase tracking-[2px] text-gray-400">
-          {project.company} · {project.period}
+      <section class="grid items-start gap-8 pb-10 pt-16 md:grid-cols-5 md:gap-12 md:pt-20">
+        <div class="md:col-span-3">
+          <div class="mb-3 text-[10px] uppercase tracking-[2px] text-gray-400">
+            {project.company} · {project.period}
+          </div>
+          <h1 class="mb-5 text-2xl font-light leading-snug text-gray-900 md:text-3xl">
+            {project.title}
+          </h1>
+          <p class="text-sm leading-[1.8] text-gray-600">
+            {project.summary}
+          </p>
         </div>
-        <h1
-          class="mb-4 max-w-xl text-2xl font-light leading-snug text-gray-900 md:text-3xl"
-        >
-          {project.title}
-        </h1>
-        <p class="max-w-lg text-[13px] leading-relaxed text-gray-500">
-          {project.summary}
-        </p>
+        <div class="md:col-span-2">
+          <HeroPipeline nodes={project.architecture} subtitle={pipelineSubtitles[slug]} />
+        </div>
       </section>
     </FadeIn>
 
+    <!-- Metrics -->
     <FadeIn client:visible>
       <section class="pb-10">
         <MetricsGrid metrics={project.metrics} />
       </section>
     </FadeIn>
 
+    <!-- Outcomes: right after metrics, prominent style -->
+    {project.outcomes && project.outcomes.length > 0 && (
+      <FadeIn client:visible delay={0.05}>
+        <section class="mb-10 rounded-2xl bg-gray-50 px-6 py-6 md:px-8 md:py-8">
+          <SectionLabel text="Project Outcomes" />
+          <ul class="space-y-3">
+            {project.outcomes.map((item) => (
+              <li class="flex items-start gap-3 text-sm leading-[1.8] text-gray-700 [&_strong]:font-semibold [&_strong]:text-gray-900">
+                <span class="mt-[10px] block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-gray-400" />
+                <span set:html={item} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      </FadeIn>
+    )}
+
+    <!-- Background -->
+    {project.background && (
+      <FadeIn client:visible delay={0.08}>
+        <section class="pb-10">
+          <SectionLabel text="Project Background" />
+          <p class="max-w-3xl text-sm leading-[1.9] text-gray-700">
+            {project.background}
+          </p>
+        </section>
+      </FadeIn>
+    )}
+
     <hr class="border-gray-100" />
 
+    <!-- Role + Tech Stack: side by side on desktop -->
     <FadeIn client:visible delay={0.1}>
-      <section class="py-10">
-        <SectionLabel text="My Role" />
-        <p class="max-w-lg text-[13px] leading-relaxed text-gray-500">
-          {project.role}
-        </p>
+      <section class="grid gap-8 py-10 md:grid-cols-5 md:gap-12">
+        <div class="md:col-span-3">
+          <SectionLabel text="My Role" />
+          <p class="text-sm leading-[1.8] text-gray-700">
+            {project.role}
+          </p>
+        </div>
+        <div class="md:col-span-2">
+          <SectionLabel text="Tech Stack" />
+          <TechTags tags={project.techStack} />
+        </div>
       </section>
     </FadeIn>
 
-    <FadeIn client:visible delay={0.15}>
-      <section class="pb-10">
-        <SectionLabel text="Tech Stack" />
-        <TechTags tags={project.techStack} />
-      </section>
-    </FadeIn>
+    <!-- Business Chains: visual evidence grid -->
+    {project.businessChains && project.businessChains.length > 0 && (
+      <>
+        <hr class="border-gray-100" />
+        <FadeIn client:visible delay={0.15}>
+          <section class="py-10">
+            <SectionLabel text="9 Business Chains" />
+            <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 md:gap-3 lg:grid-cols-3">
+              {project.businessChains.map((chain, i) => (
+                <div class="group rounded-xl border border-gray-200 bg-white px-4 py-3 shadow-sm transition-all hover:border-gray-300 hover:shadow-md md:px-5 md:py-4">
+                  <div class="mb-0.5 flex items-center gap-2 md:mb-1">
+                    <span class="flex h-5 w-5 items-center justify-center rounded bg-gray-800 text-[10px] font-medium text-white">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <span class="text-[13px] font-semibold text-gray-900">{chain.name}</span>
+                  </div>
+                  <div class="pl-7 text-[11px] text-gray-500">
+                    → {chain.output}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        </FadeIn>
+      </>
+    )}
+
+    <!-- Quality Gates: visual evidence matrix -->
+    {project.qualityGates && project.qualityGates.length > 0 && (
+      <FadeIn client:visible delay={0.18}>
+        <section class="pb-10">
+          <SectionLabel text="Quality Gates" />
+          <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 md:gap-3 lg:grid-cols-3">
+            {project.qualityGates.map((gate) => (
+              <div class="rounded-xl border border-gray-200 bg-white px-4 py-2.5 shadow-sm transition-all hover:border-gray-300 hover:shadow-md md:px-5 md:py-4">
+                <div class="mb-0.5 flex items-center gap-2 md:mb-1.5">
+                  <span class="h-2 w-2 rounded-full bg-emerald-500" />
+                  <span class="text-[13px] font-semibold text-gray-900">{gate.name}</span>
+                </div>
+                <div class="pl-4 text-[11px] leading-relaxed text-gray-500">
+                  {gate.check}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      </FadeIn>
+    )}
 
     <hr class="border-gray-100" />
 
+    <!-- Highlights: cards with bullets + tags -->
     <FadeIn client:visible delay={0.2}>
       <section class="py-10">
-        <SectionLabel text="Architecture" />
-        <ArchitectureDiagram client:visible nodes={project.architecture} />
-      </section>
-    </FadeIn>
-
-    <FadeIn client:visible delay={0.25}>
-      <section class="pb-16">
         <SectionLabel text="Key Highlights" />
-        <div class="space-y-6">
+        <div class="grid gap-4 md:grid-cols-2">
           {
             project.highlights.map((h) => (
-              <div>
-                <h3 class="mb-2 text-[13px] font-semibold text-gray-900">
+              <div class="rounded-xl border border-gray-200 bg-white px-5 py-5 shadow-sm transition-all hover:border-gray-300 hover:shadow-md">
+                <h3 class="mb-3 text-sm font-semibold text-gray-900">
                   {h.title}
                 </h3>
-                <p class="text-[12px] leading-relaxed text-gray-500">
-                  {h.description}
-                </p>
+                {h.bullets && h.bullets.length > 0 ? (
+                  <>
+                    <ul class="mb-3 space-y-2">
+                      {h.bullets.map((b) => (
+                        <li class="flex items-start gap-2 text-[13px] leading-[1.7] text-gray-700">
+                          <span class="mt-[9px] block h-1 w-1 flex-shrink-0 rounded-full bg-gray-400" />
+                          <span>{b}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    {h.tags && h.tags.length > 0 && (
+                      <div class="flex flex-wrap gap-1.5 border-t border-gray-100 pt-3">
+                        {h.tags.map((t) => (
+                          <span class="rounded bg-gray-100 px-2 py-0.5 text-[10px] font-medium text-gray-500">
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <p class="text-[13px] leading-[1.7] text-gray-700">
+                    {h.description}
+                  </p>
+                )}
               </div>
             ))
           }
@@ -87,9 +194,8 @@ const { prev, next } = getAdjacentProjects(slug);
       </section>
     </FadeIn>
 
-    <div
-      class="flex items-center justify-between border-t border-gray-100 py-8"
-    >
+    <!-- Prev / Next -->
+    <div class="flex items-center justify-between border-t border-gray-100 py-8">
       {
         prev ? (
           <a

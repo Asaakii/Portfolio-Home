@@ -7,11 +7,23 @@ export interface ArchNode {
 export interface Highlight {
   title: string;
   description: string;
+  bullets?: string[];
+  tags?: string[];
 }
 
 export interface Metric {
   value: string;
   label: string;
+}
+
+export interface BusinessChain {
+  name: string;
+  output: string;
+}
+
+export interface QualityGate {
+  name: string;
+  check: string;
 }
 
 export interface Project {
@@ -27,6 +39,10 @@ export interface Project {
   gradientTo: string;
   categoryColor: string;
   metrics: Metric[];
+  background?: string;
+  outcomes?: string[];
+  businessChains?: BusinessChain[];
+  qualityGates?: QualityGate[];
   role: string;
   techStack: string[];
   architecture: ArchNode[];
@@ -41,57 +57,130 @@ export const projects: Project[] = [
     period: '2026.03 — 至今',
     year: '2026',
     summary:
-      '基于 OpenClaw / Hermes Agent 内核，使用 LangGraph 编排 9 条业务链与 16 个专家角色的 Multi-Agent 协同决策系统，将一次性问答升级为可复跑、可追踪的政务研究工作流。',
+      '面向县域经济分析、政策研判、项目招商和规划交付场景，基于 LangGraph 构建 CountyEconomyState 状态模型与 9 条业务链条件路由，将运行监测、产业诊断、瓶颈归因、政策决策、项目招商、一县一策规划等节点组织为可追踪的多阶段 Agent Workflow。接入 Dify RAG 知识库（软知识）与 PostgreSQL（硬指标）双通道证据融合，通过 6 层质量门禁控制交付风险，在隆昌县试点完成全链路验证与交付。',
     icon: '🤖',
     categoryLabel: 'MULTI-AGENT SYSTEM',
     gradientFrom: '#f0f4ff',
     gradientTo: '#e8ecf8',
     categoryColor: '#8893b0',
     metrics: [
-      { value: '9', label: '业务链' },
-      { value: '16', label: '专家角色' },
-      { value: '50+', label: '自动化测试' },
-      { value: '270万', label: '知识库字数' },
+      { value: '9', label: '业务链 Workflow' },
+      { value: '13', label: '报告生成阶段' },
+      { value: '6', label: '质量门禁层' },
+      { value: '1000+', label: '政府文档处理' },
     ],
-    role: '独立负责 Agent 智能内核建设，主导试点县全流程交付验证。负责核心模块开发，包括任务路由、状态流转、多节点编排，以及从 OpenClaw 到 Hermes Agent 框架的架构迁移。',
+    background:
+      '县域经济是中国经济的基本空间单元，但县级政府在产业诊断、政策研判、项目招商和规划编制等工作中长期依赖人工调研与经验判断——一份县域诊断报告往往需要多部门协调、多轮数据核实，耗时数天到数周。本项目旨在为县域经济场景建设"智能分析与协同决策平台智能内核"，将县域数据、产业研判、政策决策、运行监测、项目招商、规划写作和专家协同组织成可复用、可追踪、可交付的智能体工作流，从根本上改变传统县域经济分析"数据散、流程断、结论无依据"的痛点。项目以四川隆昌县作为首个试点，完成从资料接收、文档解析、知识入库、业务链分析到 Word 报告交付的全链路验证。',
+    outcomes: [
+      '在<strong>隆昌县</strong>试点完成全链路交付验证，涵盖运行监测、产业诊断、瓶颈归因、政策决策、项目招商、一县一策规划等完整业务场景',
+      '处理 <strong>1000+</strong> 份政府文档（统计公报、政府工作报告、政策 PDF、部门 Excel 等），建成 <strong>6 类</strong> Dify 知识库（2100+ 分块，约 <strong>270 万字</strong>）',
+      '单次全链路报告生成从人工数天缩短至约 <strong>30 分钟</strong>，自动生成 <strong>12 类</strong>结构化交付物（诊断报告、政策矩阵、项目清单、规划送审稿等）',
+      '建设 <strong>81 份</strong>可交付成果，包括规划书、样例报告、质量报告、任务包、Word 送审稿和交接验收材料',
+      '成功完成 <strong>OpenClaw → Hermes Agent</strong> 架构迁移，将项目从聊天触发式升级为支持长期运行、业务链编排与多格式交付的智能内核',
+      '构建 <strong>50+</strong> 项自动化测试用例覆盖全链路，编写 <strong>50+</strong> 项 Evals 评估指标确保交付质量',
+    ],
+    businessChains: [
+      { name: '数据治理链', output: '数据资产目录' },
+      { name: '运行监测链', output: '运行监测报告' },
+      { name: '产业诊断链', output: '产业诊断报告' },
+      { name: '瓶颈归因链', output: '瓶颈归因报告' },
+      { name: '政策决策链', output: '政策矩阵' },
+      { name: '项目招商链', output: '招商清单' },
+      { name: '一县一策规划链', output: 'Word 送审稿' },
+      { name: '模型分析链', output: '模型分析报告' },
+      { name: '县域治理知识链', output: '治理知识报告' },
+    ],
+    qualityGates: [
+      { name: '数字门禁', check: '数字是否有来源、年份和口径' },
+      { name: '证据门禁', check: '政策和结论是否能追溯' },
+      { name: '逻辑门禁', check: '是否把相关性写成因果性' },
+      { name: '结构门禁', check: '是否符合报告章节结构' },
+      { name: '发布门禁', check: '是否需要部门确认或人工复核' },
+      { name: '敏感门禁', check: '是否包含不可外发内容' },
+    ],
+    role: '独立负责 Agent 智能内核全栈建设：设计 CountyEconomyState 状态模型与 LangGraph 多业务链条件路由；开发 9 条业务链（数据治理→运行监测→产业诊断→瓶颈归因→政策决策→项目招商→一县一策规划→模型分析→县域治理知识）的节点实现与多步接力编排；构建专家角色协同机制与质量门禁体系；主导从 OpenClaw 到 Hermes Agent 框架的架构迁移；在隆昌县完成试点全流程交付验证。',
     techStack: [
       'LangGraph',
-      'OpenClaw',
       'Hermes Agent',
-      'Dify',
-      'FastAPI',
+      'Dify RAG',
       'PostgreSQL',
+      'SQLite',
       'MCP',
-      'SSE / WebSocket',
+      'FastAPI',
+      'MinerU',
+      'MarkItDown',
+      'Jina Reader',
     ],
     architecture: [
-      { label: '用户请求', color: '#e0e7ff' },
-      { label: '任务路由', sub: 'LangGraph', color: '#dbeafe' },
-      { label: 'Multi-Agent', sub: '16 专家协同', color: '#fef3c7' },
-      { label: 'RAG + SQL', sub: '混合检索', color: '#d1fae5' },
-      { label: 'Evals 门禁', sub: '质量检查', color: '#ede9fe' },
-      { label: '交付物生成', sub: '12 类报告', color: '#f3f4f6' },
+      { label: '资料接收', sub: 'PDF/Word/Excel/网页', color: '#e0e7ff' },
+      { label: '文档解析', sub: 'MinerU / MarkItDown / Jina', color: '#dbeafe' },
+      { label: '知识与数据入库', sub: 'Dify + PostgreSQL + SQLite', color: '#d1fae5' },
+      { label: '业务链路由', sub: 'LangGraph 9 条链', color: '#fef3c7' },
+      { label: '专家角色协同', sub: '多角色分析生成', color: '#fce7f3' },
+      { label: 'RAG + 指标融合', sub: '软知识 + 硬数据', color: '#ccfbf1' },
+      { label: '质量门禁', sub: '6 层审查', color: '#ede9fe' },
+      { label: '交付物输出', sub: 'MD/JSON/Word', color: '#f3f4f6' },
     ],
     highlights: [
       {
-        title: 'Agent 内核架构',
-        description:
-          '基于 OpenClaw 内核设计 Agent Runtime 架构，使用 LangGraph 实现任务路由、状态流转与多节点编排。内置 Memory 管理与上下文压缩机制，将一次性问答升级为可复跑、可追踪的政务研究工作流。后期主导迁移至 Hermes Agent 框架，将架构从聊天触发式升级为支持长期运行、业务链编排与多格式交付的智能内核。',
+        title: 'LangGraph 多业务链编排',
+        description: '',
+        bullets: [
+          '设计 CountyEconomyState 状态模型，承载 request → workflow → roles → data → analysis → review → outputs → trace 全链路状态',
+          '使用 add_conditional_edges 实现 9 条业务链的条件路由，分支由 workflow_id 控制而非模型临场发挥',
+          '支持多步接力：招商链需经"运行监测→产业诊断→瓶颈归因"后才生成招商机会与政策闭环清单',
+        ],
+        tags: ['LangGraph', 'State Machine', 'Conditional Routing'],
       },
       {
-        title: 'RAG 与结构化数据融合',
-        description:
-          '基于 Dify 建设 6 类本地知识库（2100+ 分块，约 270 万字），采用语义检索 + 关键词检索 + Rerank 混合召回，结合 PostgreSQL 结构化指标查询，在同一任务中联合调用多源数据并输出带政策脚注的研判结论。',
+        title: '13 阶段报告生成链路',
+        description: '',
+        bullets: [
+          '从"需求触发"到"Obsidian 归档"的 13 阶段连续链路，而非一次性 prompt 写作',
+          '文档解析层：MinerU 解析扫描件、MarkItDown 转 Markdown、Jina 抽取网页、pandas 清洗 Excel',
+          '分析包构建：先汇聚经济运行摘要、产业画像、瓶颈假设、政策依据等中间层，再交由专家角色生成草稿',
+        ],
+        tags: ['MinerU', 'MarkItDown', 'Jina Reader', 'pandas'],
       },
       {
-        title: '工具封装与服务化',
-        description:
-          '设计封装 12 个标准化工具 MCP 接口（指标查询、RAG 检索、文档解析等），接入 20+ 项县域核心指标。按 FastAPI 服务化方式设计 Agent 接口层，支持 SSE 流式输出与 WebSocket 推送，设计统一 JSON 响应结构。',
+        title: 'RAG + 结构化数据双通道',
+        description: '',
+        bullets: [
+          'Dify 承载 6 类知识库（2100+ 分块，约 270 万字），覆盖政策、规划、会议纪要、产业资料等软知识',
+          'PostgreSQL 承载县域指标、企业、项目等硬数据，支撑具体数字和结构化查询',
+          '融合原则：具体数字必须有结构化来源，政策判断必须有政策依据，不足以定性写成"待核验事项"',
+        ],
+        tags: ['Dify', 'PostgreSQL', 'RAG', 'Rerank'],
       },
       {
-        title: '质量门禁与交付自动化',
-        description:
-          '在核心业务链关键输出节点设置 Evals 自动评估（来源引用完整性、指标事实一致性、输出格式合规性），编写 50+ 项自动化测试用例覆盖全链路。处理 1000+ 份政府文档，自动生成 12 类结构化交付物，单次全链路报告生成从人工数天缩短至约 30 分钟。',
+        title: '6 层质量门禁体系',
+        description: '',
+        bullets: [
+          '数字门禁（来源/年份/口径）、证据门禁（追溯性）、逻辑门禁（因果边界）',
+          '结构门禁（章节合规）、发布门禁（人工复核）、敏感门禁（脱敏检查）',
+          '门禁不通过进入 needs_human_review 状态，支持 retry_job 重新运行',
+        ],
+        tags: ['Quality Gate', 'Evals', 'Human Review'],
+      },
+      {
+        title: 'OpenClaw → Hermes 架构迁移',
+        description: '',
+        bullets: [
+          'OpenClaw 定位为多渠道 Gateway，适合入口层但不适合承载长期运行的业务内核',
+          'Hermes 提供 Persistent Memory、Skills System、MCP、Subagent Delegation、Cron 和 API Server',
+          '迁移后业务链、专家角色、质量门禁和交付闭环沉淀为可复用的项目资产',
+        ],
+        tags: ['Hermes Agent', 'OpenClaw', 'Architecture Migration'],
+      },
+      {
+        title: '工具链与 MCP 服务化',
+        description: '',
+        bullets: [
+          '封装 12 个标准化 MCP 接口（指标查询、RAG 检索、文档解析等），接入 20+ 项县域核心指标',
+          '工具链分层：MinerU（扫描件 OCR）→ MarkItDown（Office 转换）→ Jina（网页抽取）→ pandas（表格清洗）',
+          'FastAPI 接口层支持 SSE 流式输出与 WebSocket 推送',
+        ],
+        tags: ['MCP', 'FastAPI', 'SSE', 'WebSocket'],
       },
     ],
   },

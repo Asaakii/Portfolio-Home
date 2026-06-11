@@ -1,0 +1,75 @@
+---
+import type { ArchNode } from '../data/projects';
+
+interface Props {
+  nodes: ArchNode[];
+  subtitle?: string;
+}
+
+const { nodes, subtitle } = Astro.props;
+const lastIdx = nodes.length - 1;
+---
+
+<div class="rounded-2xl border border-gray-100 bg-white/80 p-5 backdrop-blur-sm">
+  <div class="mb-0.5 text-[10px] uppercase tracking-[2px] text-gray-300">
+    Pipeline
+  </div>
+  {subtitle && (
+    <div class="mb-3 text-[10px] text-gray-400">{subtitle}</div>
+  )}
+  {!subtitle && <div class="mb-3" />}
+
+  <!-- Mobile: compact 2-col grid -->
+  <div class="grid grid-cols-2 gap-1.5 md:hidden">
+    {
+      nodes.map((node, i) => (
+        <div
+          class:list={[
+            'rounded-md border px-3 py-2 text-center',
+            i === lastIdx && 'ring-1 ring-gray-300',
+          ]}
+          style={`background-color: ${node.color}; border-color: rgba(0,0,0,0.05);`}
+        >
+          <div class:list={[
+            'text-[10px] font-medium',
+            i === lastIdx ? 'text-gray-900' : 'text-gray-700',
+          ]}>
+            {node.label}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+
+  <!-- Desktop: vertical flow with connectors -->
+  <div class="hidden flex-col items-stretch gap-0 md:flex">
+    {
+      nodes.map((node, i) => (
+        <>
+          <div
+            class:list={[
+              'rounded-lg border px-4 py-2.5',
+              i === lastIdx && 'ring-1 ring-gray-300',
+            ]}
+            style={`background-color: ${node.color}; border-color: rgba(0,0,0,0.05);`}
+          >
+            <div class:list={[
+              'text-[11px] font-medium',
+              i === lastIdx ? 'text-gray-900' : 'text-gray-700',
+            ]}>
+              {node.label}
+            </div>
+            {node.sub && (
+              <div class="mt-0.5 text-[9px] text-gray-400">{node.sub}</div>
+            )}
+          </div>
+          {i < lastIdx && (
+            <div class="flex justify-center">
+              <div class="h-2.5 w-px bg-gray-200" />
+            </div>
+          )}
+        </>
+      ))
+    }
+  </div>
+</div>

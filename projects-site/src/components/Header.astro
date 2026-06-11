@@ -1,0 +1,99 @@
+---
+interface Props {
+  showBack?: boolean;
+}
+
+const { showBack = false } = Astro.props;
+---
+
+<header
+  class="sticky top-0 z-50 border-b border-gray-100 bg-white/80 backdrop-blur-md"
+>
+  <div
+    class="mx-auto flex max-w-5xl items-center justify-between px-6 py-5 md:px-10"
+  >
+    <a
+      href="https://asaakii.com"
+      class="text-base font-semibold tracking-tight text-gray-900"
+    >
+      Asaakii
+    </a>
+    <nav class="hidden items-center gap-7 text-xs text-gray-400 md:flex">
+      {showBack && (
+        <a href="/" class="text-gray-900 transition hover:text-gray-600">
+          ← Back
+        </a>
+      )}
+      <a href="/#projects" class="transition hover:text-gray-900">Projects</a>
+      <a
+        href="https://blog.asaakii.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="transition hover:text-gray-900"
+      >
+        Blog
+      </a>
+      <a
+        href="https://github.com/asaakii"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="transition hover:text-gray-900"
+      >
+        GitHub
+      </a>
+      <a
+        href="mailto:tpittman942@gmail.com"
+        class="transition hover:text-gray-900"
+      >
+        Contact
+      </a>
+    </nav>
+
+    <button
+      id="menu-toggle"
+      class="flex flex-col gap-1 md:hidden"
+      aria-label="Toggle menu"
+    >
+      <span class="block h-0.5 w-5 bg-gray-900"></span>
+      <span class="block h-0.5 w-5 bg-gray-900"></span>
+    </button>
+  </div>
+
+  <div
+    id="mobile-menu"
+    class="hidden border-t border-gray-100 bg-white px-6 pb-4 md:hidden"
+  >
+    {showBack && (
+      <a href="/" class="block py-2 text-sm text-gray-900">← Back</a>
+    )}
+    <a href="/#projects" class="block py-2 text-sm text-gray-500">Projects</a>
+    <a
+      href="https://blog.asaakii.com"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="block py-2 text-sm text-gray-500"
+    >
+      Blog
+    </a>
+    <a
+      href="https://github.com/asaakii"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="block py-2 text-sm text-gray-500"
+    >
+      GitHub
+    </a>
+    <a
+      href="mailto:tpittman942@gmail.com"
+      class="block py-2 text-sm text-gray-500"
+    >
+      Contact
+    </a>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  toggle?.addEventListener('click', () => menu?.classList.toggle('hidden'));
+</script>

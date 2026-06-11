@@ -1,0 +1,36 @@
+---
+interface Props {
+  title?: string;
+  showBack?: boolean;
+}
+
+const { title = "Asaakii's Projects", showBack = false } = Astro.props;
+
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <link
+      rel="icon"
+      href="https://img-asaakii-top.oss-cn-shanghai.aliyuncs.com/img/avatar2.png"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="min-h-screen bg-[#fafafa] font-sans text-gray-900 antialiased">
+    <Header showBack={showBack} />
+    <slot />
+    <Footer />
+  </body>
+</html>

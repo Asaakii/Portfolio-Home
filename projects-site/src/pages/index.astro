@@ -1,0 +1,53 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import FadeIn from '../components/FadeIn.tsx';
+import { projects } from '../data/projects';
+---
+
+<Layout title="Asaakii's Projects">
+  <main class="mx-auto max-w-5xl px-6 md:px-10">
+    <FadeIn client:load>
+      <section class="pb-14 pt-20 md:pt-24">
+        <div class="mb-4 text-[11px] uppercase tracking-[3px] text-gray-400">
+          AI Agent / RAG Engineer
+        </div>
+        <h1
+          class="mb-5 max-w-lg text-3xl font-light leading-snug text-gray-900 md:text-4xl"
+        >
+          构建智能系统，<br />让 Agent 从想法到落地。
+        </h1>
+        <p class="max-w-md text-[13px] leading-relaxed text-gray-500">
+          2 年+后端与工业数字化研发经验，专注 Agent 工程化与 RAG 管线建设。<br
+          />目前在库信数字负责县域经济 Agent 智能内核。
+        </p>
+      </section>
+    </FadeIn>
+
+    <section id="projects" class="pb-16">
+      <div class="mb-5 text-[10px] uppercase tracking-[2px] text-gray-300">
+        Selected Projects
+      </div>
+      <FadeIn client:visible delay={0.1}>
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {
+            projects.map((project) => (
+              <ProjectCard
+                slug={project.slug}
+                title={project.title}
+                summary={project.summary}
+                icon={project.icon}
+                categoryLabel={project.categoryLabel}
+                gradientFrom={project.gradientFrom}
+                gradientTo={project.gradientTo}
+                categoryColor={project.categoryColor}
+                year={project.year}
+                techStack={project.techStack}
+              />
+            ))
+          }
+        </div>
+      </FadeIn>
+    </section>
+  </main>
+</Layout>

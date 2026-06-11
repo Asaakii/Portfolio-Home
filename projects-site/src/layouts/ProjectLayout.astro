@@ -1,0 +1,119 @@
+---
+import Layout from './Layout.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+import MetricsGrid from '../components/MetricsGrid.astro';
+import TechTags from '../components/TechTags.astro';
+import ArchitectureDiagram from '../components/ArchitectureDiagram.tsx';
+import FadeIn from '../components/FadeIn.tsx';
+import { getProject, getAdjacentProjects } from '../data/projects';
+
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+const project = getProject(slug)!;
+const { prev, next } = getAdjacentProjects(slug);
+---
+
+<Layout title={`${project.title} — Asaakii`} showBack>
+  <main class="mx-auto max-w-5xl px-6 md:px-10">
+    <FadeIn client:load>
+      <section class="pb-10 pt-16 md:pt-20">
+        <div class="mb-3 text-[10px] uppercase tracking-[2px] text-gray-400">
+          {project.company} · {project.period}
+        </div>
+        <h1
+          class="mb-4 max-w-xl text-2xl font-light leading-snug text-gray-900 md:text-3xl"
+        >
+          {project.title}
+        </h1>
+        <p class="max-w-lg text-[13px] leading-relaxed text-gray-500">
+          {project.summary}
+        </p>
+      </section>
+    </FadeIn>
+
+    <FadeIn client:visible>
+      <section class="pb-10">
+        <MetricsGrid metrics={project.metrics} />
+      </section>
+    </FadeIn>
+
+    <hr class="border-gray-100" />
+
+    <FadeIn client:visible delay={0.1}>
+      <section class="py-10">
+        <SectionLabel text="My Role" />
+        <p class="max-w-lg text-[13px] leading-relaxed text-gray-500">
+          {project.role}
+        </p>
+      </section>
+    </FadeIn>
+
+    <FadeIn client:visible delay={0.15}>
+      <section class="pb-10">
+        <SectionLabel text="Tech Stack" />
+        <TechTags tags={project.techStack} />
+      </section>
+    </FadeIn>
+
+    <hr class="border-gray-100" />
+
+    <FadeIn client:visible delay={0.2}>
+      <section class="py-10">
+        <SectionLabel text="Architecture" />
+        <ArchitectureDiagram client:visible nodes={project.architecture} />
+      </section>
+    </FadeIn>
+
+    <FadeIn client:visible delay={0.25}>
+      <section class="pb-16">
+        <SectionLabel text="Key Highlights" />
+        <div class="space-y-6">
+          {
+            project.highlights.map((h) => (
+              <div>
+                <h3 class="mb-2 text-[13px] font-semibold text-gray-900">
+                  {h.title}
+                </h3>
+                <p class="text-[12px] leading-relaxed text-gray-500">
+                  {h.description}
+                </p>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+    </FadeIn>
+
+    <div
+      class="flex items-center justify-between border-t border-gray-100 py-8"
+    >
+      {
+        prev ? (
+          <a
+            href={`/projects/${prev.slug}`}
+            class="text-[11px] text-gray-400 transition hover:text-gray-900"
+          >
+            &larr; {prev.title}
+          </a>
+        ) : (
+          <span />
+        )
+      }
+      {
+        next ? (
+          <a
+            href={`/projects/${next.slug}`}
+            class="text-[11px] text-gray-900 transition hover:text-gray-600"
+          >
+            {next.title} &rarr;
+          </a>
+        ) : (
+          <span />
+        )
+      }
+    </div>
+  </main>
+</Layout>

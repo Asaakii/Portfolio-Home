@@ -1,0 +1,66 @@
+---
+interface Props {
+  slug: string;
+  title: string;
+  summary: string;
+  icon: string;
+  categoryLabel: string;
+  gradientFrom: string;
+  gradientTo: string;
+  categoryColor: string;
+  year: string;
+  techStack: string[];
+}
+
+const {
+  slug,
+  title,
+  summary,
+  icon,
+  categoryLabel,
+  gradientFrom,
+  gradientTo,
+  categoryColor,
+  year,
+  techStack,
+} = Astro.props;
+---
+
+<a
+  href={`/projects/${slug}`}
+  class="group block overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
+>
+  <div
+    class="relative flex h-36 items-center justify-center"
+    style={`background: linear-gradient(135deg, ${gradientFrom} 0%, ${gradientTo} 100%);`}
+  >
+    <div class="text-center">
+      <div class="text-3xl">{icon}</div>
+      <div
+        class="mt-1.5 text-[9px] tracking-widest"
+        style={`color: ${categoryColor};`}
+      >
+        {categoryLabel}
+      </div>
+    </div>
+    <span
+      class="absolute right-3 top-3 rounded-full bg-black/5 px-2.5 py-0.5 text-[9px] text-gray-500"
+    >
+      {year}
+    </span>
+  </div>
+
+  <div class="p-5">
+    <h3 class="mb-1.5 text-sm font-semibold text-gray-900">{title}</h3>
+    <p class="mb-3.5 text-[11px] leading-relaxed text-gray-500">{summary}</p>
+    <div class="flex flex-wrap gap-1.5">
+      {
+        techStack.slice(0, 4).map((tech) => (
+          <span class="rounded bg-gray-100 px-2 py-0.5 text-[9px] text-gray-500">
+            {tech}
+          </span>
+        ))
+      }
+    </div>
+  </div>
+</a>

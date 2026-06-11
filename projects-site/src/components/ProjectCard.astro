@@ -4,6 +4,8 @@ interface Props {
   title: string;
   summary: string;
   icon: string;
+  coverImage?: string;
+  featured?: boolean;
   categoryLabel: string;
   gradientFrom: string;
   gradientTo: string;
@@ -17,6 +19,8 @@ const {
   title,
   summary,
   icon,
+  coverImage,
+  featured,
   categoryLabel,
   gradientFrom,
   gradientTo,
@@ -28,27 +32,46 @@ const {
 
 <a
   href={`/projects/${slug}`}
-  class="group block overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
+  class:list={[
+    'group block overflow-hidden rounded-2xl border bg-white transition-all duration-200 hover:-translate-y-1 hover:shadow-lg',
+    featured ? 'border-gray-300 shadow-sm' : 'border-gray-200',
+  ]}
 >
-  <div
-    class="relative flex h-36 items-center justify-center"
-    style={`background: linear-gradient(135deg, ${gradientFrom} 0%, ${gradientTo} 100%);`}
-  >
-    <div class="text-center">
-      <div class="text-3xl">{icon}</div>
-      <div
-        class="mt-1.5 text-[9px] tracking-widest"
-        style={`color: ${categoryColor};`}
+  {coverImage ? (
+    <div class="relative h-52 overflow-hidden">
+      <img
+        src={coverImage}
+        alt={title}
+        class="h-full w-full object-cover object-[center_65%] transition-transform duration-300 group-hover:scale-105"
+        loading="lazy"
+      />
+      <span
+        class="absolute right-3 top-3 rounded-full bg-black/30 px-2.5 py-0.5 text-[9px] text-white backdrop-blur-sm"
       >
-        {categoryLabel}
-      </div>
+        {year}
+      </span>
     </div>
-    <span
-      class="absolute right-3 top-3 rounded-full bg-black/5 px-2.5 py-0.5 text-[9px] text-gray-500"
+  ) : (
+    <div
+      class="relative flex h-36 items-center justify-center"
+      style={`background: linear-gradient(135deg, ${gradientFrom} 0%, ${gradientTo} 100%);`}
     >
-      {year}
-    </span>
-  </div>
+      <div class="text-center">
+        <div class="text-3xl">{icon}</div>
+        <div
+          class="mt-1.5 text-[9px] tracking-widest"
+          style={`color: ${categoryColor};`}
+        >
+          {categoryLabel}
+        </div>
+      </div>
+      <span
+        class="absolute right-3 top-3 rounded-full bg-black/5 px-2.5 py-0.5 text-[9px] text-gray-500"
+      >
+        {year}
+      </span>
+    </div>
+  )}
 
   <div class="p-5">
     <h3 class="mb-1.5 text-sm font-semibold text-gray-900">{title}</h3>

@@ -149,6 +149,101 @@ const pipelineSubtitles: Record<string, string> = {
       </FadeIn>
     )}
 
+    <!-- RAG Q&A Example (AI assistant only) -->
+    {project.ragExample && (
+      <FadeIn client:visible delay={0.15}>
+        <section class="mb-10 rounded-2xl bg-gray-50 px-6 py-6 md:px-8 md:py-8">
+          <SectionLabel text="RAG Q&A Example" />
+          <div class="space-y-4">
+            <div class="rounded-xl bg-blue-50 px-5 py-4">
+              <div class="mb-1.5 text-[10px] font-semibold uppercase tracking-wider text-blue-500">Question</div>
+              <p class="text-sm font-semibold text-gray-900">{project.ragExample.question}</p>
+            </div>
+            <div class="rounded-xl bg-white px-5 py-4 shadow-sm">
+              <div class="mb-2 text-[10px] font-semibold uppercase tracking-wider text-gray-500">Retrieved Documents</div>
+              <ul class="space-y-1.5">
+                {project.ragExample.docs.map((doc) => (
+                  <li class="flex items-start gap-2 text-[13px] text-gray-700">
+                    <span class="mt-1.5 block h-1 w-1 flex-shrink-0 rounded-full bg-gray-500" />
+                    {doc}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div class="rounded-xl bg-green-50 px-5 py-4">
+              <div class="mb-1.5 text-[10px] font-semibold uppercase tracking-wider text-green-600">Answer</div>
+              <p class="text-sm leading-[1.8] text-gray-900">{project.ragExample.answer}</p>
+            </div>
+            <div class="rounded-xl border border-gray-200 bg-white px-5 py-4 shadow-sm">
+              <div class="mb-2 text-[10px] font-semibold uppercase tracking-wider text-gray-500">Sources</div>
+              <ul class="space-y-1.5">
+                {project.ragExample.sources.map((src) => (
+                  <li class="flex items-start gap-2 text-[12px] text-gray-600">
+                    <span class="mt-0.5">📄</span>
+                    {src}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+      </FadeIn>
+    )}
+
+    <!-- Subsystems Topology (smart-platform only) -->
+    {project.subsystems && project.subsystems.length > 0 && (
+      <>
+        <hr class="border-gray-100" />
+        <FadeIn client:visible delay={0.15}>
+          <section class="py-10">
+            <SectionLabel text="17 Subsystems Matrix" />
+            <div class="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+              {project.subsystems.map((sys) => (
+                <div class="rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-center shadow-sm transition-all hover:border-gray-300 hover:shadow-md">
+                  <div class="text-[13px] font-medium text-gray-900">{sys.name}</div>
+                  <div class="mt-0.5 text-[10px] text-gray-400">{sys.category}</div>
+                </div>
+              ))}
+            </div>
+          </section>
+        </FadeIn>
+      </>
+    )}
+
+    <!-- Protocol Specs (data-collection only) -->
+    {project.protocolSpecs && project.protocolSpecs.length > 0 && (
+      <>
+        <hr class="border-gray-100" />
+        <FadeIn client:visible delay={0.15}>
+          <section class="py-10">
+            <SectionLabel text="Protocol Specs" />
+            <div class="overflow-x-auto rounded-xl bg-gray-50 px-5 py-5 md:px-6 md:py-6">
+              <table class="w-full text-left text-[13px]">
+                <thead>
+                  <tr class="border-b border-gray-200 text-[10px] font-semibold uppercase tracking-wider text-gray-500">
+                    <th class="pb-3 pr-4 font-semibold">Protocol</th>
+                    <th class="pb-3 pr-4 font-semibold">Medium</th>
+                    <th class="pb-3 pr-4 font-semibold">Data Types</th>
+                    <th class="pb-3 font-semibold">Use Case</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {project.protocolSpecs.map((spec) => (
+                    <tr class="border-b border-gray-200/60">
+                      <td class="py-3.5 pr-4 font-semibold text-gray-900">{spec.protocol}</td>
+                      <td class="py-3.5 pr-4 text-gray-700">{spec.medium}</td>
+                      <td class="py-3.5 pr-4 text-gray-700">{spec.dataTypes}</td>
+                      <td class="py-3.5 text-gray-600">{spec.use}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </FadeIn>
+      </>
+    )}
+
     <hr class="border-gray-100" />
 
     <!-- Highlights: cards with bullets + tags -->

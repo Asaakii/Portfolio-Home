@@ -57,7 +57,7 @@ export const projects: Project[] = [
     period: '2026.03 — 至今',
     year: '2026',
     summary:
-      '面向县域经济分析、政策研判、项目招商和规划交付场景，基于 LangGraph 构建 CountyEconomyState 状态模型与 9 条业务链条件路由，将运行监测、产业诊断、瓶颈归因、政策决策、项目招商、一县一策规划等节点组织为可追踪的多阶段 Agent Workflow。接入 Dify RAG 知识库（软知识）与 PostgreSQL（硬指标）双通道证据融合，通过 6 层质量门禁控制交付风险，在隆昌县试点完成全链路验证与交付。',
+      '基于 LangGraph 编排 9 条业务链的 Multi-Agent 协同决策系统，融合 RAG 知识库与结构化数据双通道，通过 6 层质量门禁实现从资料接收到 Word 报告交付的全自动化链路。',
     icon: '🤖',
     categoryLabel: 'MULTI-AGENT SYSTEM',
     gradientFrom: '#f0f4ff',

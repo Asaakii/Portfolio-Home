@@ -10,7 +10,7 @@
     <link rel="preload" href="./assets/fonts/nb_akademie_medium-webfont.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="./assets/fonts/GT-Sectra-Fine-Book.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="./assets/fonts/GT-Sectra-Fine-Medium.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/index.css?v=audio-button-5">
     <script>
         var ua = (navigator.userAgent || navigator.vendor || window.opera).toLowerCase();
         document.documentElement.className += /(iPad|iPhone|Android)/i.test(ua) ? ' is-mobile' : ' is-desktop';
@@ -18,7 +18,7 @@
     </script>
     <script defer src="./js/TweenLite.js"></script>
     <script defer src="./js/three.r112.js"></script>
-    <script defer src="./js/index.js"></script>
+    <script defer src="./js/index.js?v=audio-button-5"></script>
 </head>
 
 <body>
@@ -51,6 +51,30 @@
         </div>
         <div id="header-menu-btn"></div>
     </header>
+    <button id="snd-btn" type="button" aria-label="开启音频" aria-pressed="false">
+        <span class="snd-btn-ring" aria-hidden="true"></span>
+        <span class="snd-btn-note" aria-hidden="true">♪</span>
+        <span class="snd-btn-slash" aria-hidden="true"></span>
+    </button>
+    <script>
+        window.__toggleSiteAudioButton = function(btn) {
+            if (window.siteAudio) {
+                window.siteAudio.toggleUserAudio();
+                return;
+            }
+            btn.classList.toggle('is-on');
+            btn.setAttribute('aria-pressed', btn.classList.contains('is-on') ? 'true' : 'false');
+            btn.setAttribute('aria-label', btn.classList.contains('is-on') ? '关闭音频' : '开启音频');
+        };
+        window.addEventListener('click', function(event) {
+            var target = event.target;
+            var btn = target && target.closest ? target.closest('#snd-btn') : null;
+            if (!btn) return;
+            event.preventDefault();
+            event.stopPropagation();
+            window.__toggleSiteAudioButton(btn);
+        }, true);
+    </script>
     <!-- 移动端菜单 -->
     <div id="menu">
         <div id="menu-content" class="flex-vertical">

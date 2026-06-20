@@ -51,13 +51,14 @@ export interface Project {
     answer: string;
     sources: string[];
   };
-  subsystems?: { name: string; category: string }[];
+  subsystems?: { name: string; category: string; type?: 'hardware' | 'software' }[];
   protocolSpecs?: {
     protocol: string;
     medium: string;
     dataTypes: string;
     use: string;
   }[];
+  screenshots?: { src: string; alt: string }[];
   role: string;
   techStack: string[];
   architecture: ArchNode[];
@@ -322,7 +323,7 @@ export const projects: Project[] = [
     period: '2023.06 — 2026.02',
     year: '2023',
     summary:
-      '完成 17 个异构子系统集成对接，设计统一适配层实现协议归一化，覆盖 500+ 台终端设备数据接入，搭建统一运维监控大屏。',
+      '完成 27 个子系统（17 个硬件 + 10 个软件）集成对接，设计统一适配层实现协议归一化，覆盖 500+ 台终端设备数据接入，搭建统一运维监控大屏。',
     icon: '⚡',
     coverImage:
       'https://img-asaakii-top.oss-cn-shanghai.aliyuncs.com/img/yitihua.webp',
@@ -331,39 +332,75 @@ export const projects: Project[] = [
     gradientTo: '#f8f0e8',
     categoryColor: '#b08b5a',
     metrics: [
-      { value: '17', label: '子系统' },
+      { value: '27', label: '子系统' },
       { value: '500+', label: '终端设备' },
       { value: '统一', label: '监控大屏' },
       { value: '全自动', label: '报表推送' },
     ],
     background:
-      '电厂在智慧化改造过程中陆续引入了安防监控、人员定位、AI 视觉推理、环境监测、门禁管理等十余套独立子系统，但各系统由不同厂商建设，接口协议各异（REST、WebSocket、MQTT、私有 SDK 等），数据格式不统一，运维人员需要在多个平台间反复切换查看，无法形成统一态势感知。本项目旨在构建"一体化平台"，通过设计统一协议适配层将 17 个异构子系统整合为一个统一入口，实现设备状态实时监控、告警事件统一处理和运维报表自动推送，从根本上解决"信息孤岛"和"多屏切换"的运维痛点。',
+      '电厂在智慧化改造过程中陆续引入了安防监控、人员定位、门禁道闸、视频监控等 17 套硬件子系统，以及智慧运行、智慧检修、智慧安全等 10 套软件应用子系统，但各系统由不同厂商建设，接口协议各异（REST、WebSocket、MQTT、私有 SDK 等），数据格式不统一，运维人员需要在多个平台间反复切换查看，无法形成统一态势感知。本项目旨在构建"一体化平台"，通过设计统一协议适配层将 27 个子系统整合为一个统一入口，实现设备状态实时监控、告警事件统一处理和运维报表自动推送，从根本上解决"信息孤岛"和"多屏切换"的运维痛点。',
     outcomes: [
-      '完成 <strong>17</strong> 个异构子系统的集成对接，覆盖安防监控、人员定位、AI 视觉推理、环境监测、门禁管理等全场景',
+      '完成 <strong>27</strong> 个子系统的集成对接，覆盖 17 个硬件子系统（视频监控、门禁道闸、人员定位、网络安全等）和 10 个软件子系统（智慧运行、智慧检修、智慧安全等）',
       '接入 <strong>500+</strong> 台终端设备的实时数据，设备在线率监控覆盖率达到 <strong>100%</strong>',
       '搭建统一运维监控大屏，运维人员从"多平台切换"收敛为<strong>单屏操作</strong>，响应效率显著提升',
       '实现运维报表<strong>全自动推送</strong>，将原依赖人工导出的周期性流程完全自动化，每周节省数小时人工操作',
     ],
     subsystems: [
-      { name: '视频监控', category: '安防' },
-      { name: '入侵检测', category: '安防' },
-      { name: '电子围栏', category: '安防' },
-      { name: '门禁管理', category: '安防' },
-      { name: '人员定位', category: '定位' },
-      { name: '车辆管理', category: '定位' },
-      { name: '访客管理', category: '定位' },
-      { name: 'AI 视觉推理', category: 'AI' },
-      { name: '安全帽检测', category: 'AI' },
-      { name: '烟火检测', category: 'AI' },
-      { name: '环境监测', category: '环境' },
-      { name: '温湿度采集', category: '环境' },
-      { name: '消防报警', category: '消防' },
-      { name: '消防联动', category: '消防' },
-      { name: '广播对讲', category: '通信' },
-      { name: '会议系统', category: '通信' },
-      { name: '能耗监测', category: '能源' },
+      { name: '机房建设', category: '基础设施', type: 'hardware' },
+      { name: '智慧展厅', category: '基础设施', type: 'hardware' },
+      { name: '超融合', category: '基础设施', type: 'hardware' },
+      { name: '有线网络', category: '网络', type: 'hardware' },
+      { name: '无线网络', category: '网络', type: 'hardware' },
+      { name: '网络安全', category: '网络', type: 'hardware' },
+      { name: '视频监控', category: '安防', type: 'hardware' },
+      { name: '门禁道闸及访客机', category: '安防', type: 'hardware' },
+      { name: '周界防护及电子巡更', category: '安防', type: 'hardware' },
+      { name: '人员定位', category: '定位', type: 'hardware' },
+      { name: '物资设备管理', category: '管理', type: 'hardware' },
+      { name: '信息展示大屏', category: '展示', type: 'hardware' },
+      { name: '会议室', category: '通信', type: 'hardware' },
+      { name: '智能机器人', category: '智能', type: 'hardware' },
+      { name: '语音广播', category: '通信', type: 'hardware' },
+      { name: '其他普通设备', category: '其他', type: 'hardware' },
+      { name: '其他智能设备', category: '其他', type: 'hardware' },
+      { name: '仿真培训系统', category: '培训仿真', type: 'software' },
+      { name: '数字化虚拟电厂', category: '数字孪生', type: 'software' },
+      { name: '智慧安全应用', category: '安全', type: 'software' },
+      { name: '智慧管控平台', category: '管控', type: 'software' },
+      { name: '智慧管理应用', category: '管理', type: 'software' },
+      { name: '智慧检修应用', category: '检修', type: 'software' },
+      { name: '智慧建设应用', category: '建设', type: 'software' },
+      { name: '智慧经营应用', category: '经营', type: 'software' },
+      { name: '智慧运行平台', category: '运行', type: 'software' },
+      { name: '智慧运行应用', category: '运行', type: 'software' },
     ],
-    role: '独立负责异构子系统集成架构设计与实现：调研 17 个子系统的接口协议与数据格式，设计统一适配层完成协议归一化；基于 MQTT 构建设备事件异步采集管道；使用 Vue + ECharts 开发统一运维监控大屏，包括设备拓扑、实时告警、趋势分析等模块；开发 FastAPI 后端服务实现跨系统数据聚合与报表自动生成推送。',
+    screenshots: [
+      {
+        src: 'https://img-asaakii-top.oss-cn-shanghai.aliyuncs.com/img/1.%E5%9B%9B%E5%B7%9D%E8%83%BD%E6%8A%95%E5%B9%BF%E5%85%83%E7%87%83%E6%9C%BA%E5%B7%A5%E7%A8%8B%E6%99%BA%E6%85%A7%E7%94%B5%E5%8E%82%E9%87%87%E8%B4%AD%E8%BD%AF%E4%BB%B6%E5%BA%94%E7%94%A8%E6%8A%80%E6%9C%AF%E6%9C%8D%E5%8A%A1_%E6%99%BA%E6%85%A7%E5%BB%BA%E8%AE%BE_%E5%9F%BA%E5%BB%BA%E9%97%A8%E6%88%B7.webp',
+        alt: '基建管理驾驶舱大屏',
+      },
+      {
+        src: 'https://img-asaakii-top.oss-cn-shanghai.aliyuncs.com/img/34.%E5%9B%9B%E5%B7%9D%E8%83%BD%E6%8A%95%E5%B9%BF%E5%85%83%E7%87%83%E6%9C%BA%E5%B7%A5%E7%A8%8B%E6%99%BA%E6%85%A7%E7%94%B5%E5%8E%82%E9%87%87%E8%B4%AD%E8%BD%AF%E4%BB%B6%E5%BA%94%E7%94%A8%E6%8A%80%E6%9C%AF%E6%9C%8D%E5%8A%A1_%E6%99%BA%E6%85%A7%E7%BB%8F%E8%90%A5_%E5%A4%A7%E5%B1%8F%E5%BA%94%E7%94%A8.webp',
+        alt: '智慧经营驾驶舱',
+      },
+      {
+        src: 'https://img-asaakii-top.oss-cn-shanghai.aliyuncs.com/img/23.%E5%9B%9B%E5%B7%9D%E8%83%BD%E6%8A%95%E5%B9%BF%E5%85%83%E7%87%83%E6%9C%BA%E5%B7%A5%E7%A8%8B%E6%99%BA%E6%85%A7%E7%94%B5%E5%8E%82%E9%87%87%E8%B4%AD%E8%BD%AF%E4%BB%B6%E5%BA%94%E7%94%A8%E6%8A%80%E6%9C%AF%E6%9C%8D%E5%8A%A1_%E6%99%BA%E6%85%A7%E5%AE%89%E5%85%A8_%E6%99%BA%E8%83%BD%E5%AE%89%E9%98%B2.webp',
+        alt: '智能安防 · 在线围栏调度平台',
+      },
+      {
+        src: 'https://img-asaakii-top.oss-cn-shanghai.aliyuncs.com/img/5.%E5%9B%9B%E5%B7%9D%E8%83%BD%E6%8A%95%E5%B9%BF%E5%85%83%E7%87%83%E6%9C%BA%E5%B7%A5%E7%A8%8B%E6%99%BA%E6%85%A7%E7%94%B5%E5%8E%82%E9%87%87%E8%B4%AD%E5%B9%B3%E5%8F%B0%E5%8F%8A%E9%83%A8%E7%BD%B2%E6%9C%8D%E5%8A%A1_%E5%B7%A5%E4%B8%9A%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%BB%84%E4%BB%B6.webp',
+        alt: '工业大数据 · 时序数据库管理平台',
+      },
+      {
+        src: 'https://img-asaakii-top.oss-cn-shanghai.aliyuncs.com/img/3.%E5%9B%9B%E5%B7%9D%E8%83%BD%E6%8A%95%E5%B9%BF%E5%85%83%E7%87%83%E6%9C%BA%E5%B7%A5%E7%A8%8B%E6%99%BA%E6%85%A7%E7%94%B5%E5%8E%82%E9%87%87%E8%B4%AD%E5%B9%B3%E5%8F%B0%E5%8F%8A%E9%83%A8%E7%BD%B2%E6%9C%8D%E5%8A%A1_%E7%BB%84%E6%80%81%E5%BB%BA%E6%A8%A1%E7%BB%84%E4%BB%B6.webp',
+        alt: '一体化平台 · 组态建模',
+      },
+      {
+        src: 'https://img-asaakii-top.oss-cn-shanghai.aliyuncs.com/img/7.%E5%9B%9B%E5%B7%9D%E8%83%BD%E6%8A%95%E5%B9%BF%E5%85%83%E7%87%83%E6%9C%BA%E5%B7%A5%E7%A8%8B%E6%99%BA%E6%85%A7%E7%94%B5%E5%8E%82%E9%87%87%E8%B4%AD%E5%B9%B3%E5%8F%B0%E5%8F%8A%E9%83%A8%E7%BD%B2%E6%9C%8D%E5%8A%A1_%E6%95%B0%E5%AD%97%E5%AD%AA%E7%94%9F%E7%BB%84%E4%BB%B6.webp',
+        alt: '数字孪生 · 工厂建模',
+      },
+    ],
+    role: '独立负责异构子系统集成架构设计与实现：调研 27 个子系统（17 个硬件 + 10 个软件）的接口协议与数据格式，设计统一适配层完成协议归一化；基于 MQTT 构建设备事件异步采集管道；使用 Vue + ECharts 开发统一运维监控大屏，包括设备拓扑、实时告警、趋势分析等模块；开发 FastAPI 后端服务实现跨系统数据聚合与报表自动生成推送。',
     techStack: [
       'Vue',
       'ECharts',
@@ -375,7 +412,7 @@ export const projects: Project[] = [
       'PostgreSQL',
     ],
     architecture: [
-      { label: '17 子系统', sub: '安防/定位/AI/环监/门禁', color: '#fef3c7' },
+      { label: '27 子系统', sub: '17 硬件 + 10 软件', color: '#fef3c7' },
       {
         label: '协议适配层',
         sub: 'REST/WS/MQTT/SDK 归一化',
@@ -399,10 +436,10 @@ export const projects: Project[] = [
     ],
     highlights: [
       {
-        title: '17 子系统协议适配层',
+        title: '27 子系统协议适配层',
         description: '',
         bullets: [
-          '调研并对接 17 个独立子系统，涵盖安防监控、人员定位、AI 视觉推理、环境监测、门禁管理、消防报警等',
+          '调研并对接 27 个子系统，硬件涵盖视频监控、门禁道闸、周界防护、人员定位、网络安全等 17 套，软件涵盖智慧运行、智慧检修、智慧安全、智慧经营等 10 套',
           '各系统接口协议各异（REST API、WebSocket 推送、MQTT Topic、厂商私有 SDK），设计统一适配层完成协议归一化',
           '适配层采用插件式架构：每个子系统对应一个 Adapter，新增子系统只需实现标准接口即可接入，无需修改核心逻辑',
         ],

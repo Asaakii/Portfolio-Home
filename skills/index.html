@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>能力星图 — Asaakii</title>
+    <meta name="description" content="Asaakii 的个人能力星图：摄影、吉他、音乐制作、直播、登山、徒步、潜水、Vibe Coding、硬件开发、软件开发。">
+    <link rel="icon" href="https://img-asaakii-top.oss-cn-shanghai.aliyuncs.com/img/avatar2.png">
+    <link rel="preload" href="../assets/fonts/nb_akademie_light-webfont.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../assets/fonts/nb_akademie_medium-webfont.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../assets/fonts/GT-Sectra-Fine-Book.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../assets/fonts/GT-Sectra-Fine-Medium.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="nav-bar">
+        <a href="/" class="nav-home">Asaakii</a>
+        <div class="nav-links">
+            <a href="/projects/">项目集</a>
+            <a href="https://blog.asaakii.com" target="_blank" rel="noopener noreferrer">博客</a>
+            <a href="https://github.com/asaakii" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+    </nav>
+
+    <!-- Page title hint -->
+    <header class="page-title" id="pageTitle">
+        <h1 class="page-title-main">能力星图</h1>
+        <p class="page-title-sub">一些正在发光的长期练习 · 点击星星查看</p>
+    </header>
+
+    <main class="sky" id="sky" aria-label="能力星图">
+        <canvas class="bg-canvas" id="bgCanvas"></canvas>
+
+        <!-- Orbital rings -->
+        <div class="orbits" aria-hidden="true">
+            <div class="orbit orbit-1"></div>
+            <div class="orbit orbit-2"></div>
+            <div class="orbit orbit-3"></div>
+        </div>
+
+        <!-- Center node -->
+        <div class="center-node" aria-hidden="true">
+            <span class="center-glow"></span>
+            <span class="center-label">Asaakii</span>
+        </div>
+
+        <svg class="constellation-lines" id="constellationLines"></svg>
+
+        <section class="constellation" data-group="create" aria-labelledby="group-create">
+            <h2 class="constellation-label" id="group-create" style="--lx:18;--ly:10">创造表达</h2>
+            <button class="star" data-skill="摄影" style="--x:14;--y:22" aria-pressed="false">
+                <span class="star-dot"></span>
+                <span class="star-ring" aria-hidden="true"></span>
+                <span class="star-name">摄影</span>
+            </button>
+            <button class="star" data-skill="弹吉他" style="--x:28;--y:34" aria-pressed="false">
+                <span class="star-dot"></span>
+                <span class="star-ring" aria-hidden="true"></span>
+                <span class="star-name">弹吉他</span>
+            </button>
+            <button class="star" data-skill="音乐制作" style="--x:8;--y:40" aria-pressed="false">
+                <span class="star-dot"></span>
+                <span class="star-ring" aria-hidden="true"></span>
+                <span class="star-name">音乐制作</span>
+            </button>
+            <button class="star" data-skill="直播" style="--x:25;--y:15" aria-pressed="false">
+                <span class="star-dot"></span>
+                <span class="star-ring" aria-hidden="true"></span>
+                <span class="star-name">直播</span>
+            </button>
+        </section>
+
+        <section class="constellation" data-group="adventure" aria-labelledby="group-adventure">
+            <h2 class="constellation-label" id="group-adventure" style="--lx:15;--ly:56">山海行动</h2>
+            <button class="star" data-skill="登山" style="--x:18;--y:65" aria-pressed="false">
+                <span class="star-dot"></span>
+                <span class="star-ring" aria-hidden="true"></span>
+                <span class="star-name">登山</span>
+            </button>
+            <button class="star" data-skill="徒步" style="--x:8;--y:76" aria-pressed="false">
+                <span class="star-dot"></span>
+                <span class="star-ring" aria-hidden="true"></span>
+                <span class="star-name">徒步</span>
+            </button>
+            <button class="star" data-skill="潜水" style="--x:28;--y:79" aria-pressed="false">
+                <span class="star-dot"></span>
+                <span class="star-ring" aria-hidden="true"></span>
+                <span class="star-name">潜水</span>
+            </button>
+        </section>
+
+        <section class="constellation" data-group="engineering" aria-labelledby="group-engineering">
+            <h2 class="constellation-label" id="group-engineering" style="--lx:70;--ly:14">工程造物</h2>
+            <button class="star" data-skill="Vibe Coding" style="--x:68;--y:24" aria-pressed="false">
+                <span class="star-dot"></span>
+                <span class="star-ring" aria-hidden="true"></span>
+                <span class="star-name">Vibe Coding</span>
+            </button>
+            <button class="star" data-skill="硬件开发" style="--x:82;--y:38" aria-pressed="false">
+                <span class="star-dot"></span>
+                <span class="star-ring" aria-hidden="true"></span>
+                <span class="star-name">硬件开发</span>
+            </button>
+            <button class="star" data-skill="软件开发" style="--x:72;--y:52" aria-pressed="false">
+                <span class="star-dot"></span>
+                <span class="star-ring" aria-hidden="true"></span>
+                <span class="star-name">软件开发</span>
+            </button>
+        </section>
+
+        <!-- Detail panel: fixed bottom-right -->
+        <aside class="detail-panel" id="detailPanel" aria-live="polite">
+            <h3 class="detail-name" id="detailName"></h3>
+            <p class="detail-desc" id="detailDesc"></p>
+        </aside>
+    </main>
+
+    <footer class="page-footer">
+        <span class="footer-quote">要有听雨的心情，也要有淋雨的心情。</span>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -2,3 +2,8 @@
 .DS_Store
 .superpowers/
 .worktrees/
+node_modules/
+.playwright-cli/
+.playwright-mcp/
+skills-app/node_modules/
+docs/

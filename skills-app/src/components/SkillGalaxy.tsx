@@ -382,8 +382,14 @@ export function SkillGalaxy() {
   const setActiveSkill = useAtlasStore((state) => state.setActiveSkill);
   const activeGroup = useAtlasStore((state) => state.activeGroup);
   const [transientGroup, setTransientGroup] = useState<SkillGroupId | 'all' | null>(null);
+  const hasMountedRef = useRef(false);
 
   useEffect(() => {
+    if (!hasMountedRef.current) {
+      hasMountedRef.current = true;
+      return undefined;
+    }
+
     setTransientGroup(activeGroup);
     const timeoutId = window.setTimeout(() => setTransientGroup(null), activeGroup === 'all' ? 900 : 1700);
     return () => window.clearTimeout(timeoutId);

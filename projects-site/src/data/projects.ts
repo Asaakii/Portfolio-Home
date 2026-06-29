@@ -117,6 +117,32 @@ export const projects: Project[] = [
       { name: '发布门禁', check: '是否需要部门确认或人工复核' },
       { name: '敏感门禁', check: '是否包含不可外发内容' },
     ],
+    screenshots: [
+      {
+        src: 'https://img-asaakii-top.oss-cn-shanghai.aliyuncs.com/img/%E6%9E%B6%E6%9E%84%E5%9B%BE.webp',
+        alt: '智能内核总体架构图',
+      },
+      {
+        src: 'https://img-asaakii-top.oss-cn-shanghai.aliyuncs.com/img/OpenClaw%20%E5%8E%BF%E5%9F%9F%E7%BB%8F%E6%B5%8E%20LangGraph%20%E5%B7%A5%E4%BD%9C%E6%B5%81%E6%80%BB%E8%A7%88-%E6%80%BB%E8%A7%88-%E8%BF%90%E8%A1%8C%E6%97%B6%E8%B7%AF%E7%94%B1.drawio.webp',
+        alt: 'LangGraph 9 条业务链运行时路由图',
+      },
+      {
+        src: 'https://img-asaakii-top.oss-cn-shanghai.aliyuncs.com/img/chatflow%E5%B1%95%E7%A4%BA.webp',
+        alt: 'Dify Chatflow 20 个专家角色总览',
+      },
+      {
+        src: 'https://img-asaakii-top.oss-cn-shanghai.aliyuncs.com/img/%E6%99%BA%E8%83%BD%E4%BD%93%E5%AF%B9%E8%AF%9D.webp',
+        alt: 'Agent 实际对话 · 隆昌高新企业分析',
+      },
+      {
+        src: 'https://img-asaakii-top.oss-cn-shanghai.aliyuncs.com/img/%E9%9A%86%E6%98%8C%E7%9F%A5%E8%AF%86%E5%BA%93.webp',
+        alt: '隆昌知识库 · 136 份政府文档',
+      },
+      {
+        src: 'https://img-asaakii-top.oss-cn-shanghai.aliyuncs.com/img/chatflow.webp',
+        alt: '数据治理链 Chatflow 编排详情',
+      },
+    ],
     role: '独立负责 Agent 智能内核全栈建设：设计 CountyEconomyState 状态模型与 LangGraph 多业务链条件路由；开发 9 条业务链（数据治理→运行监测→产业诊断→瓶颈归因→政策决策→项目招商→一县一策规划→模型分析→县域治理知识）的节点实现与多步接力编排；构建专家角色协同机制与质量门禁体系；主导从 OpenClaw 到 Hermes Agent 框架的架构迁移；在隆昌县完成试点全流程交付验证。',
     techStack: [
       'LangGraph',

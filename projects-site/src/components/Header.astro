@@ -13,7 +13,7 @@ const { showBack = false } = Astro.props;
     class="mx-auto flex max-w-5xl items-center justify-between px-6 py-5 md:px-10"
   >
     <a
-      href="https://home.asaakii.com"
+      href={showBack ? "/projects/" : "https://home.asaakii.com"}
       class="text-base font-semibold tracking-tight text-gray-900"
     >
       Asaakii

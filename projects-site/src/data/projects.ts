@@ -59,6 +59,18 @@ export interface Project {
     use: string;
   }[];
   screenshots?: { src: string; alt: string }[];
+  painPoints?: { title: string; description: string }[];
+  solutionPositioning?: string;
+  dataAssets?: { name: string; value: string; description: string }[];
+  expertRoles?: { name: string; responsibility: string }[];
+  reflection?: string;
+  outlook?: { title: string; description: string }[];
+  implementationPath?: {
+    title: string;
+    subtitle: string;
+    steps: { name: string; description: string }[];
+  };
+  coreDifferentiators?: { title: string; description: string }[];
   role: string;
   techStack: string[];
   architecture: ArchNode[];
@@ -89,7 +101,176 @@ export const projects: Project[] = [
       { value: '1000+', label: '政府文档处理' },
     ],
     background:
-      '县域经济是中国经济的基本空间单元，但县级政府在产业诊断、政策研判、项目招商和规划编制等工作中长期依赖人工调研与经验判断——一份县域诊断报告往往需要多部门协调、多轮数据核实，耗时数天到数周。本项目旨在为县域经济场景建设"智能分析与协同决策平台智能内核"，将县域数据、产业研判、政策决策、运行监测、项目招商、规划写作和专家协同组织成可复用、可追踪、可交付的智能体工作流，从根本上改变传统县域经济分析"数据散、流程断、结论无依据"的痛点。项目以四川隆昌县作为首个试点，完成从资料接收、文档解析、知识入库、业务链分析到 Word 报告交付的全链路验证。',
+      '本项目由四川省发展和改革委员会发起，属于省级统建的政务数智化应用场景。直接起点是省政府 2025 年 8 月的批示——要求"建设数智赋能县域经济动态监测和研究分析平台"，随后由省发改委牵头，经"四张清单"申报论证程序立项，总投资概算约 2682 万元。项目不是从零开始的全新系统，而是对省发改委现有县域经济监测平台的智能化升级——原平台仅覆盖约 20 项宏观监测指标，以人工填报和静态排名为主，无法支撑精细化研判和跨部门协同决策。四川省 183 个县（市、区）发展差异大、产业定位趋同、政策传导效率低，需要一套数智化工具来支撑精准施策。',
+    painPoints: [
+      {
+        title: '底数不清',
+        description:
+          '全省县域季度核心指标约 3500 个、年度约 8000 个，但现有监测体系偏重 GDP、固投等宏观指标，缺少产业结构、增长动能、要素配置等深度分析维度。数据人工汇总校核效率低，从收集到报告产出周期需 1—3 个月。',
+      },
+      {
+        title: '研判不准',
+        description:
+          '在全省 15+N 现代产业体系布局下，61.2% 的县域主导产业集中在食品饮料、装备制造等传统赛道，产业筛选和比较优势研判仍依赖经验判断，缺乏量化工具支撑错位发展。',
+      },
+      {
+        title: '协同不畅',
+        description:
+          '县域经济核心监管事项中有 15 项需跨部门调取 12 类数据，涉及 18 个省级部门。全省跨部门数据共享响应平均时长超 72 小时，三级联动依赖人工对接。',
+      },
+      {
+        title: '政策不精',
+        description:
+          '省级每年向 183 个县下发经济发展、产业扶持、民生保障类政策超 200 项，但仅三分之一实现全流程跟踪，事前无沙盘推演、事中无实时监测、事后无精准评估。',
+      },
+      {
+        title: '决策不快',
+        description:
+          '报告产出周期长，人工汇总校核易出错，从数据采集到分析报告落地存在显著时间损耗，无法匹配经济形势快速变化。',
+      },
+      {
+        title: '基层负担重',
+        description:
+          '基层面临数据重复报送、表格多头填报、分析任务繁重等问题，人工汇总效率低、误差大，亟需数智化工具减负增效。',
+      },
+    ],
+    solutionPositioning:
+      '智能内核不是单一聊天机器人，也不是单一报告生成脚本，而是嵌入三大业务平台全流程的智能分析引擎——把县域经济分析所需的业务链、专家角色、知识库、结构化数据、证据边界、质量门禁和交付物组织成可复用、可追踪、可平台化接入的智能体业务编排系统。项目重构三大核心业务流程：县域经济监测分析从人工填报升级为多源数据自动归集与智能预警；主导产业错位发展规划从经验判断升级为量化比较优势分析与"一县一策"方案智能生成；政策执行从事后总结升级为事前推演、事中监测、事后量化评估的全周期闭环。系统明确划定边界：不替代统计部门的正式数据口径，不直接生成正式考核排名或因果结论，所有 AI 产出标注证据层级和使用边界，正式规划仍需人工组织和专家评审。',
+    dataAssets: [
+      {
+        name: '统计年鉴数据',
+        value: '324,539 条',
+        description:
+          '覆盖 925 个地区、970 张统计表，时间跨度 1952—2024 年，含 183 县专属 11 类指标',
+      },
+      {
+        name: '企业工商数据',
+        value: '22,119 家',
+        description:
+          '覆盖 21 个市州，包含工商登记、行业分类、经营范围等 18 个字段',
+      },
+      {
+        name: 'Dify 知识库',
+        value: '427 个文档',
+        description:
+          '12 个专题知识库，约 254 万字，覆盖政策、规划、会议纪要、产业资料等',
+      },
+      {
+        name: '数据治理矩阵',
+        value: '9,150 条',
+        description:
+          '183 个县 × 5 年 × 多张统计表的覆盖度评估，量化每个县的数据缺口',
+      },
+      {
+        name: '源材料归档',
+        value: '823 张卡片',
+        description:
+          '全量源材料卡片 + 原始文件（22 MB），覆盖 281 个 Hermes 文件 + 167 个 OpenClaw 文件',
+      },
+    ],
+    expertRoles: [
+      { name: '首席经济专家', responsibility: '统一业务链判断、证据边界和最终口径' },
+      { name: '数据治理专家', responsibility: '检查指标来源、口径、缺失项和数据质量' },
+      { name: '运行监测分析师', responsibility: '形成运行态势摘要、指标解释和压力判断' },
+      { name: '预警分析师', responsibility: '解释预警触发规则和复核方向' },
+      { name: '产业战略专家', responsibility: '形成产业画像、优势方向和短板判断' },
+      { name: '链条分析师', responsibility: '分析产业链缺口、项目支撑和补链机会' },
+      { name: '瓶颈诊断专家', responsibility: '把预警和诊断转化为可核验的瓶颈假设' },
+      { name: '政策规划专家', responsibility: '把问题和预警转化为政策抓手' },
+      { name: '县域规划总师', responsibility: '接收上游分析包，组织一县一策与规划交付物' },
+      { name: '规划质量审查专家', responsibility: '检查规划框架的证据、边界和越权表达' },
+      { name: '项目招商分析师', responsibility: '生成招商补链机会清单' },
+      { name: '落地服务专员', responsibility: '把项目机会转化为落地服务和部门协同任务' },
+      { name: '量化模型分析师', responsibility: '选择统计模型、检查前置假设并解释模型边界' },
+      { name: '县域治理知识分析师', responsibility: '解释县域财政、产业、项目、企业和治理运转逻辑' },
+    ],
+    reflection:
+      '这个项目让我深刻理解了 AI 在政务场景中的边界问题。最大的收获不是技术实现本身，而是建立了"证据层级意识"——在政务分析中，硬指标结论必须有硬数据支撑、瓶颈归因只能作为待核验假设、规划建议必须引用上游分析结论。这种边界控制思维在通用 AI 应用中容易被忽视，但在政务场景中是生命线。架构迁移（OpenClaw → Hermes）的经历也让我认识到：技术选型不是一次性决策，而是随项目形态演进的持续判断——当项目从"聊天入口触发 Agent"升级为"长期运行的业务智能内核"时，平台能力的匹配度比历史资产的沉没成本更重要。另一个重要反思是数据治理的优先级：我们花了大量时间从零建立覆盖全省 183 个县的数据底座，这看似是"基础设施工作"，但实际上决定了上层所有分析的可信度和可用性。',
+    implementationPath: {
+      title: '隆昌试点 · 端到端实施路径',
+      subtitle: '以隆昌县为试点，展示从原始数据采集到正式交付物产出的完整链路',
+      steps: [
+        {
+          name: '数据采集与治理',
+          description:
+            '采集隆昌县多源政府文档（统计公报、政府工作报告、政策 PDF、企业 Excel 等），建立覆盖 183 县 × 5 年的数据资产目录，量化每个县的数据缺口并生成部门补数清单。',
+        },
+        {
+          name: '知识库建设与文档解析',
+          description:
+            '将 1000+ 份文档经 MinerU / MarkItDown / Jina 解析后入库，构建 6 类 Dify 知识库（2100+ 分块，约 270 万字），覆盖政策、规划、会议纪要、产业资料等。',
+        },
+        {
+          name: '运行监测与产业诊断',
+          description:
+            '系统自动完成隆昌经济运行态势摘要与预警识别，形成产业画像和比较优势判断，产出运行监测报告和产业诊断报告。',
+        },
+        {
+          name: '瓶颈归因与政策决策',
+          description:
+            '将监测预警和产业诊断转化为待核验瓶颈假设与验证任务，匹配政策依据，生成政策行动矩阵和决策报告。',
+        },
+        {
+          name: '一县一策规划与项目招商',
+          description:
+            '汇总上游分析包，生成一县一策规划框架（v0.1→v0.2 深化稿）、规划专家任务包和招商补链机会清单，由 county_planning_subagent 协同规划写作队列。',
+        },
+        {
+          name: '质量门禁与交付',
+          description:
+            '经证据核验 Subagent、质量审查 Subagent 和专家终审三级门禁，产出 12 类结构化交付物（Markdown 报告、JSON 清单、Word 送审稿），不通过则进入人工复核重跑闭环。',
+        },
+      ],
+    },
+    coreDifferentiators: [
+      {
+        title: '证据层级体系',
+        description:
+          '严格区分硬数据（指标值、台账）、软证据（调研材料、政策文本）、待核验假设（瓶颈归因、因果推断）和专家规则（角色边界、门禁约束）四级证据，所有 AI 产出标注证据层级和使用边界，不把相关性写成因果性。',
+      },
+      {
+        title: '业务链强控制',
+        description:
+          '9 条业务链的路由由 workflow_id 和 add_conditional_edges 控制，而非 LLM 临场发挥。相同入口稳定进入相同业务链，招商链必须经过"运行监测→产业诊断→瓶颈归因"后才能生成招商机会。',
+      },
+      {
+        title: '质量门禁驱动',
+        description:
+          '报告不是一次性生成，而是经过 6 层质量门禁（数字/证据/逻辑/结构/发布/敏感）逐级审查。门禁不通过自动进入 needs_human_review 状态，支持 retry_job 重跑，确保产出可用于正式决策场景。',
+      },
+      {
+        title: '专属知识库 vs 通用大模型',
+        description:
+          '区别于互联网通用大模型，系统基于地方政府专属的统计年鉴、政策文本、产业资料等构建领域知识底座。模型检索本地知识库而非互联网数据，确保产出贴合地方实际而非泛化生成。',
+      },
+      {
+        title: '多步接力而非单点问答',
+        description:
+          '县域经济分析不是一次问答，而是多节点接力——项目招商链需经 5 个上游节点积累分析包后才产出招商清单，一县一策规划链需经 7 个节点才到达专家终审，每个节点读写同一个 CountyEconomyState 状态黑板。',
+      },
+    ],
+    outlook: [
+      {
+        title: '扩展结构化知识表示',
+        description:
+          '把县域、产业、指标、政策、项目、部门和证据来源之间的关系沉淀为可查询的知识图谱，从文档检索升级为关系推理。',
+      },
+      {
+        title: '增强质量门禁自动修订',
+        description:
+          '当前质量门禁不通过需人工复核后重跑，后续将增加图内自动修订循环——质量门禁驱动 revision_planner 自动修改草稿再重新审查。',
+      },
+      {
+        title: '多县复用机制',
+        description:
+          '在隆昌试点基础上抽象多县模板、指标适配规则、产业类型画像和政策匹配方法，实现从单县验证到全省 183 个县的规模化覆盖。',
+      },
+      {
+        title: '平台化持久化增强',
+        description:
+          '将工作记忆和推理解释从 runtime state 写入 PostgreSQL 证据链数据库，支持跨 session 的分析追溯和版本化回滚。',
+      },
+    ],
     outcomes: [
       '在<strong>隆昌县</strong>试点完成全链路交付验证，涵盖运行监测、产业诊断、瓶颈归因、政策决策、项目招商、一县一策规划等完整业务场景',
       '处理 <strong>1000+</strong> 份政府文档（统计公报、政府工作报告、政策 PDF、部门 Excel 等），建成 <strong>6 类</strong> Dify 知识库（2100+ 分块，约 <strong>270 万字</strong>）',
@@ -177,7 +358,7 @@ export const projects: Project[] = [
     highlights: [
       {
         title: 'LangGraph 多业务链编排',
-        description: '',
+        description: '解决县域经济分析中业务流程松散、多环节依赖人工衔接效率低的问题',
         bullets: [
           '设计 CountyEconomyState 状态模型，承载 request → workflow → roles → data → analysis → review → outputs → trace 全链路状态',
           '使用 add_conditional_edges 实现 9 条业务链的条件路由，分支由 workflow_id 控制而非模型临场发挥',
@@ -187,7 +368,7 @@ export const projects: Project[] = [
       },
       {
         title: '13 阶段报告生成链路',
-        description: '',
+        description: '解决从原始材料到正式报告周期长达数天、人工汇总校核易出错的问题',
         bullets: [
           '从"需求触发"到"Obsidian 归档"的 13 阶段连续链路，而非一次性 prompt 写作',
           '文档解析层：MinerU 解析扫描件、MarkItDown 转 Markdown、Jina 抽取网页、pandas 清洗 Excel',
@@ -197,7 +378,7 @@ export const projects: Project[] = [
       },
       {
         title: 'RAG + 结构化数据双通道',
-        description: '',
+        description: '解决政策判断缺乏依据、数字结论缺少来源的可信度问题',
         bullets: [
           'Dify 承载 6 类知识库（2100+ 分块，约 270 万字），覆盖政策、规划、会议纪要、产业资料等软知识',
           'PostgreSQL 承载县域指标、企业、项目等硬数据，支撑具体数字和结构化查询',
@@ -207,7 +388,7 @@ export const projects: Project[] = [
       },
       {
         title: '6 层质量门禁体系',
-        description: '',
+        description: '解决 AI 生成内容无审查机制、可能越界承诺或输出错误结论的安全风险',
         bullets: [
           '数字门禁（来源/年份/口径）、证据门禁（追溯性）、逻辑门禁（因果边界）',
           '结构门禁（章节合规）、发布门禁（人工复核）、敏感门禁（脱敏检查）',
@@ -217,7 +398,7 @@ export const projects: Project[] = [
       },
       {
         title: 'OpenClaw → Hermes 架构迁移',
-        description: '',
+        description: '解决原架构定位为聊天入口 Gateway、无法承载长期运行业务内核的技术瓶颈',
         bullets: [
           'OpenClaw 定位为多渠道 Gateway，适合入口层但不适合承载长期运行的业务内核',
           'Hermes 提供 Persistent Memory、Skills System、MCP、Subagent Delegation、Cron 和 API Server',
@@ -227,7 +408,7 @@ export const projects: Project[] = [
       },
       {
         title: '工具链与 MCP 服务化',
-        description: '',
+        description: '解决工具能力分散、接入方式不统一、无法标准化复用的问题',
         bullets: [
           '封装 12 个标准化 MCP 接口（指标查询、RAG 检索、文档解析等），接入 20+ 项县域核心指标',
           '工具链分层：MinerU（扫描件 OCR）→ MarkItDown（Office 转换）→ Jina（网页抽取）→ pandas（表格清洗）',

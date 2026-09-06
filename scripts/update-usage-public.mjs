@@ -71,28 +71,14 @@ for (const row of extra.daily || []) {
 
 const activity = [...activityByDate.values()].sort((a, b) => a.date.localeCompare(b.date))
 
-const tokens = (raw.details || []).reduce(
-  (sum, row) => ({
-    input: sum.input + Number(row.inputTokens || 0),
-    output: sum.output + Number(row.outputTokens || 0),
-    cache: sum.cache + Number(row.cacheTokens || 0),
-  }),
-  { input: 0, output: 0, cache: 0 },
-)
-
 const publicSnapshot = {
   generatedAt: raw.generatedAt,
   range: raw.range,
-  note: '公开快照：仅含按日期、工具、模型和小时聚合的 Token 数据；不含项目、终端、会话明细和费用。',
-  totals: {
-    ...tokens,
-    total: tokens.input + tokens.output + tokens.cache,
-  },
   records,
   hourly,
   activity,
 }
 
 const outputFile = path.resolve('usage/data.json')
-fs.writeFileSync(outputFile, `${JSON.stringify(publicSnapshot, null, 2)}\n`)
+fs.writeFileSync(outputFile, `${JSON.stringify(publicSnapshot)}\n`)
 console.log(`已写入公开快照：${outputFile}`)

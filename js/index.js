@@ -757,6 +757,7 @@ function(e, t, n) {
     y = -1,
     w = -1,
     b = 0,
+    W = "undefined" != typeof WeakMap ? new WeakMap : null,
     S = t.elems;
     function T(e) {
         var n = +new Date;
@@ -803,6 +804,22 @@ function(e, t, n) {
         var n = e.nodeName.toLowerCase();
         return !! o(["source", "object", "iframe"], n) || !t && ("true" === e.contentEditable || o(["input", "select", "label", "textarea", "option"], n))
     }
+    function U(e) {
+        var t = W && W.get(e);
+        if (!t) {
+            for (var n = [], i = !1, r = !1, a = e; a;) n.unshift(a),
+            i || I(a, !0) && (i = !0),
+            r || I(a, !1) && (r = !0),
+            a = a.parentNode;
+            t = {
+                h: n,
+                m: i,
+                o: r
+            },
+            W && e && W.set(e, t)
+        }
+        return t
+    }
     function A(e, n) {
         var r, o, a, s, c, l, b, S = {
             originalEvent: e = e || u.event,
@@ -815,12 +832,21 @@ function(e, t, n) {
         R = T.indexOf("move") > -1,
         A = S.isTouch = T.indexOf("touch") > -1,
         D = !1;
-        if (t.isFirstTouch === i && (t.isFirstTouch = A), A) for (c = e.touches.length ? e.touches[0] : e.changedTouches[0], S.x = a = c.pageX, S.y = s = c.pageY, S.target = b = c.target, S.identifier = c.identifier, S.touches = e.touches, t.prevBubbleHistory = t.currentBubbleHistory, l = t.currentBubbleHistory = S.bubbleHistory = []; b;) l.unshift(b),
-        !D && I(b, R) && (D = S.isSkipPreventDefault = !0),
-        b = b.parentNode;
-        else for (S.identifier = 0, S.x = a = f ? e.pageX: e.clientX + h.scrollLeft, S.y = s = f ? e.pageY: e.clientY + h.scrollTop, S.target = b = e.target ? e.target: e.srcElement, t.prevBubbleHistory = t.currentBubbleHistory, l = t.currentBubbleHistory = S.bubbleHistory = []; b;) l.unshift(b),
-        !D && I(b, R) && (D = S.isSkipPreventDefault = !0),
-        b = b.parentNode;
+        if (t.isFirstTouch === i && (t.isFirstTouch = A), A) c = e.touches.length ? e.touches[0] : e.changedTouches[0],
+        S.x = a = c.pageX,
+        S.y = s = c.pageY,
+        S.target = b = c.target,
+        S.identifier = c.identifier,
+        S.touches = e.touches;
+        else S.identifier = 0,
+        S.x = a = f ? e.pageX: e.clientX + h.scrollLeft,
+        S.y = s = f ? e.pageY: e.clientY + h.scrollTop,
+        S.target = b = e.target ? e.target: e.srcElement;
+        var B = U(b),
+        N = R ? B.m: B.o;
+        (D = N) && (S.isSkipPreventDefault = !0),
+        t.prevBubbleHistory = t.currentBubbleHistory,
+        l = t.currentBubbleHistory = S.bubbleHistory = B.h;
         if (t.x = a, t.y = s, P) {
             for (m = !0, p = _ = M, g = y = a, x = w = s, t.downBubbleHistory = l, r = l.length; r--;) o = l[r],
             A && o[v + "over"] && (S.currentTarget = o, o[v + "over"].call(o, S)),
@@ -1910,6 +1936,7 @@ function(e, t, n) {
             o = !0;
             var e = (a = i.shift()).img;
             e.onload = s,
+            e.onerror = s,
             e.src = a.src
         }
     };
@@ -2058,9 +2085,9 @@ function(e, t, n) {
             textRatio: 1,
             onUpdate: v
         })));
-        0 === r.easedMouse.x && 0 === r.easedMouse.x || (u.transform = "translate3d(" + Math.round(r.easedMouse.x) + "px," + Math.round(r.easedMouse.y + 30) + "px,0)");
+        0 === r.easedMouse.x && 0 === r.easedMouse.x || (m = "translate3d(" + Math.round(r.easedMouse.x) + "px," + Math.round(r.easedMouse.y + 30) + "px,0)") !== p && (p = m, u.transform = m);
         t.textOpacity += .1 * (("" === e ? 0 : 1) - t.textOpacity),
-        u.opacity = t.textOpacity
+        g !== t.textOpacity && (g = t.textOpacity, u.opacity = t.textOpacity)
     },
     t.textRatio = 0,
     t.textOpacity = 0,
@@ -2071,6 +2098,9 @@ function(e, t, n) {
     c = "",
     l = void 0,
     d = 0,
+    p = "",
+    m = "",
+    g = -1,
     f = t.IS_ACTIVE = !i.isMobile;
     function h(e) {
         f && (t.overText = e)
@@ -2341,12 +2371,18 @@ function(e, t, n) {
         e.onreadystatechange = function() {
             t._onXmlHttpChange()
         },
+        e.onerror = function() {
+            t._onXmlHttpError()
+        },
         e.open(this.method, this.url, !0),
         this.xmlhttp.responseType = this.responseType,
         a ? e.send(null) : e.send()
     },
     c._onXmlHttpChange = function() {
-        4 === this.xmlhttp.readyState && 200 === this.xmlhttp.status && this._onLoad(this.xmlhttp)
+        4 === this.xmlhttp.readyState && !this.isLoaded && this._onLoad(this.xmlhttp)
+    },
+    c._onXmlHttpError = function() {
+        this.isLoaded || this._onLoad(this.xmlhttp)
     },
     c._onXmlHttpProgress = function(e) {
         this.loadingSignal.dispatch(e.loaded / e.total)
@@ -2710,15 +2746,16 @@ function(e, t, n) {
     "use strict";
     var i = n(5),
     r = i.transform3dStyle,
-    o = i.transformStyle;
+    o = i.transformStyle,
+    a = "undefined" != typeof WeakMap ? new WeakMap : null;
     t.moveY = r ?
     function(e, t) {
-        e[r] = "translate3d(0," + t + "px,0)"
+        a && a.get(e) === t || (a && a.set(e, t), e[r] = "translate3d(0," + t + "px,0)")
     }: o ?
     function(e, t) {
-        e[o] = "translate(0," + t + "px)"
+        a && a.get(e) === t || (a && a.set(e, t), e[o] = "translate(0," + t + "px)")
     }: function(e, t) {
-        e.top = t + "px"
+        a && a.get(e) === t || (a && a.set(e, t), e.top = t + "px")
     }
 },
 function(e, t, n) {
@@ -4227,6 +4264,7 @@ function(e, t, n) {
     b = n(229),
     S = void 0,
     T = void 0,
+    z = null,
     M = !0,
     P = !1;
     function R() {
@@ -4260,8 +4298,8 @@ function(e, t, n) {
         a.easedMouse = new w.Vector2(0, 0),
         a.easedMouseVel = new w.Vector2(0, 0),
         a.mobileOrientation = new w.Vector4,
-        window.addEventListener("resize", D),
-        window.addEventListener("orientationchange", D),
+        window.addEventListener("resize", B),
+        window.addEventListener("orientationchange", B),
         D(),
         u.onDowned.add(A),
         u.onMoved.add(A),
@@ -4299,6 +4337,10 @@ function(e, t, n) {
         a.mouse.set(e.x, e.y - t),
         !r.isMobile && M && (a.prevMouse.copy(a.mouse), a.elasticMouse.copy(a.mouse), a.easedMouse.copy(a.mouse)),
         M = !1
+    }
+    function B() {
+        clearTimeout(z),
+        z = setTimeout(D, 150, !0)
     }
     function D(e) {
         var t = a.width = window.innerWidth,
@@ -4404,7 +4446,11 @@ function(module, exports, __webpack_require__) {
     var _super = TextItem.prototype,
     _p = JSONItem.prototype = new TextItem;
     function _onLoad() {
-        this.content || (this.content = window.JSON && window.JSON.parse ? JSON.parse(this.xmlhttp.responseText.toString()) : eval(this.xmlhttp.responseText.toString())),
+        if (!this.content) try {
+            this.content = window.JSON && window.JSON.parse ? JSON.parse(this.xmlhttp.responseText.toString()) : eval(this.xmlhttp.responseText.toString())
+        } catch(e) {
+            this.content = null
+        }
         _super._onLoad.call(this)
     }
     _p.constructor = JSONItem,
@@ -4441,10 +4487,11 @@ function(e, t, n) {
         var e = this.content;
         e.src = this.url,
         this.loadThrough ? e.addEventListener("canplaythrough", this.boundOnLoad, !1) : e.addEventListener("canplay", this.boundOnLoad, !1);
+        e.addEventListener("error", this.boundOnLoad, !1),
         e.load()
     },
     u._onLoad = function() {
-        if (this.content.removeEventListener("canplaythrough", this.boundOnLoad, !1), this.content.removeEventListener("canplay", this.boundOnLoad, !1), this.isLoaded) return;
+        if (this.content.removeEventListener("canplaythrough", this.boundOnLoad, !1), this.content.removeEventListener("canplay", this.boundOnLoad, !1), this.content.removeEventListener("error", this.boundOnLoad, !1), this.isLoaded) return;
         s._onLoad.call(this)
     }
 },
@@ -4480,10 +4527,11 @@ function(e, t, n) {
         e.preload = "auto",
         e.src = this.url,
         this.loadThrough ? e.addEventListener("canplaythrough", this.boundOnLoad, !1) : e.addEventListener("canplay", this.boundOnLoad, !1);
+        e.addEventListener("error", this.boundOnLoad, !1),
         e.load()
     },
     u._onLoad = function() {
-        if (this.content.removeEventListener("canplaythrough", this.boundOnLoad), this.content.removeEventListener("canplay", this.boundOnLoad), this.isLoaded) return;
+        if (this.content.removeEventListener("canplaythrough", this.boundOnLoad), this.content.removeEventListener("canplay", this.boundOnLoad), this.content.removeEventListener("error", this.boundOnLoad), this.isLoaded) return;
         s._onLoad.call(this)
     }
 },
@@ -4530,10 +4578,13 @@ function(e, t, n) {
         s.load.apply(this, arguments);
         var e = this.content;
         e.onload = this.boundOnLoad,
+        e.onerror = this.boundOnLoad,
         e.src = this.url
     },
     u._onLoad = function() {
+        if (this.isLoaded) return;
         delete this.content.onload,
+        delete this.content.onerror,
         this.width = this.content.width,
         this.height = this.content.height,
         s._onLoad.call(this)
@@ -4696,8 +4747,7 @@ function(e, t, n) {
         t = Math.min(i.scrollTop, e),
         n = a.clamp(t / e, 0, 1);
         o.moveY(this.innerStyle, .85 * t),
-        this.innerStyle.opacity = 1 - n,
-        this.innerStyle.visibility = 1 === n ? "hidden": "visible";
+        n !== this._lastN && (this._lastN = n, this.innerStyle.opacity = 1 - n, this.innerStyle.visibility = 1 === n ? "hidden": "visible");
         var r = n < 1;
         r !== this.isActive && (this.isActive = r, r ? (this.title && this.title.show(2), this.desc && this.desc.show(3)) : (this.title && this.title.hide(0), this.desc && this.desc.hide(0)))
     }
@@ -5778,6 +5828,12 @@ function(e, t, n) {
     a = n(51),
     s = n(2),
     u = n(15),
+    b = {
+        "img-1": "https://img-asaakii-top.oss-cn-shanghai.aliyuncs.com/img/myblog.webp",
+        "img-2": "https://img-asaakii-top.oss-cn-shanghai.aliyuncs.com/img/code.webp",
+        "img-3": "https://img-asaakii-top.oss-cn-shanghai.aliyuncs.com/img/projects.webp",
+        "img-4": "https://img-asaakii-top.oss-cn-shanghai.aliyuncs.com/img/desktop.webp"
+    },
     c = n(6),
     l = n(52),
     d = n(11),
@@ -5806,13 +5862,17 @@ function(e, t, n) {
     var v = h.prototype;
     v.preInit = function() {
         var e = this;
-        o.loader.add(r.cdnPath + "images/" + this.id + "/" + (i.isMobile ? "mobile_thumb.png": "desktop_home_thumb.png"), {
+        o.loader.add(b[this.id], {
+            type: "image",
             onLoad: function(t) {
-                a.add(t, i.isMobile ? 256 : 544, i.isMobile ? 256 : 306,
-                function(t) {
-                    e.thumb = t,
-                    e.imageContainerInner.appendChild(t)
-                })
+                var n = document.createElement("canvas"),
+                r = i.isMobile ? 256 : 544,
+                a = i.isMobile ? 256 : 306;
+                n.width = r,
+                n.height = a,
+                n.getContext("2d").drawImage(t, 0, 0, r, a),
+                e.thumb = n,
+                e.imageContainerInner.appendChild(n)
             }
         })
     },
@@ -5830,6 +5890,7 @@ function(e, t, n) {
     v.resize = function() {
         this.imageContainer.style.height = Math.floor(this.imageContainer.offsetWidth / 16 * 9) + "px",
         this.imageContainer.style.transform = this.contextContainer.style.transform = "translateZ(0)",
+        this._lastImageTransform = this._lastContextTransform = null,
         this.domRect.testViewport(!0),
         this.contextDomRect.testViewport(!0);
         for (var e = this.splitTextEffects,
@@ -5850,7 +5911,8 @@ function(e, t, n) {
             this.startedLoading = !0;
             var e = this,
             t = this.thumb;
-            o.loader.load(r.cdnPath + "images/" + this.id + "/" + "desktop_home.png", {
+            o.loader.load(b[this.id], {
+                type: "image",
                 onLoad: function(n) {
                     e.image = n,
                     e.imageContainerInner.appendChild(n),
@@ -5909,12 +5971,14 @@ function(e, t, n) {
         v = this.domRect.top + .5 * this.domRect.height * c + l,
         m = s.smoothstep(1, .5, Math.abs(v / o.height / .5 - 1)),
         p = -.01 * (d - h) * m,
-        g = -.01 * (f - v) * m;
-        this.imageContainer.style.transform = "translate(" + p + "px," + (l + 100 * g / o.height) + "vh) scale3d(1," + c + ",1)",
+        g = -.01 * (f - v) * m,
+        y = "translate(" + p + "px," + (l + 100 * g / o.height) + "vh) scale3d(1," + c + ",1)";
+        y !== this._lastImageTransform && (this._lastImageTransform = y, this.imageContainer.style.transform = y),
         a = e[0].ratio;
         var x = s.fit(a, 0, 1, 1.6, 1, u.easeOutCubic),
-        _ = s.fit(a, 0, 1, 20, 0, u.easeOutCubic);
-        this.contextContainer.style.transform = "translate(" + (_ + 1.4 * p) + "px," + 100 * g / o.height * 1.4 + "vh) scale3d(" + x + ",1,1)"
+        _ = s.fit(a, 0, 1, 20, 0, u.easeOutCubic),
+        w = "translate(" + (_ + 1.4 * p) + "px," + 100 * g / o.height * 1.4 + "vh) scale3d(" + x + ",1,1)";
+        w !== this._lastContextTransform && (this._lastContextTransform = w, this.contextContainer.style.transform = w)
     }
 },
 function(e, t) {
@@ -10398,13 +10462,15 @@ function(e, t, n) {
             o.isSupportWebGL && i.update(e, t, Math.ceil(this.domRect.refDomRect.height));
             var n = (t - o.height) / (.75 * o.height),
             a = s.smoothstep(0, .5, Math.max(0, 1 - Math.abs(n)));
-            if (m.opacity = a, a > 0) {
-                var u = Math.max(Math.abs(n) - .25, 0) * Math.sign(n) * -200;
-                m.transform = "translate3d(0," + (n * o.height * .75 + u) + "px,0)"
+            if (S !== a && (S = a, m.opacity = a), a > 0) {
+                var u = Math.max(Math.abs(n) - .25, 0) * Math.sign(n) * -200,
+                w = "translate3d(0," + (n * o.height * .75 + u) + "px,0)";
+                w !== T && (T = w, m.transform = w)
             }
-            if (n = (t - 3 * o.height) / (.75 * o.height), a = s.smoothstep(0, .5, Math.max(0, 1 - Math.abs(n))), g.opacity = a, a > 0) {
-                var d = Math.max(Math.abs(n) - .25, 0) * Math.sign(n) * -200;
-                g.transform = "translate3d(0," + (n * o.height * .75 + d) + "px,0)"
+            if (n = (t - 3 * o.height) / (.75 * o.height), a = s.smoothstep(0, .5, Math.max(0, 1 - Math.abs(n))), M !== a && (M = a, g.opacity = a), a > 0) {
+                var d = Math.max(Math.abs(n) - .25, 0) * Math.sign(n) * -200,
+                b = "translate3d(0," + (n * o.height * .75 + d) + "px,0)";
+                b !== P && (P = b, g.transform = b)
             }
             if (o.isSupportWebGL) {
                 var h = !1;
@@ -10419,7 +10485,11 @@ function(e, t, n) {
     p = void 0,
     g = void 0,
     x = void 0,
-    _ = !1;
+    _ = !1,
+    S = -1,
+    T = "",
+    M = -1,
+    P = "";
     function y() {
         i.onClick() && (_ = !0)
     }

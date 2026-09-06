@@ -1,0 +1,36 @@
+---
+interface Props {
+  delay?: number;
+  className?: string;
+}
+
+const { delay = 0, className } = Astro.props;
+---
+
+<div
+  class:list={['fade-in', className]}
+  style={delay ? `transition-delay: ${delay * 1000}ms` : undefined}
+>
+  <slot />
+</div>
+
+<style>
+  .fade-in {
+    transition:
+      opacity 0.5s ease-out,
+      transform 0.5s ease-out;
+  }
+
+  :global(html.js) .fade-in:not(.is-visible) {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade-in {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>

@@ -4,7 +4,7 @@ import SectionLabel from '../components/SectionLabel.astro';
 import MetricsGrid from '../components/MetricsGrid.astro';
 import TechTags from '../components/TechTags.astro';
 import HeroPipeline from '../components/HeroPipeline.astro';
-import FadeIn from '../components/FadeIn.tsx';
+import FadeIn from '../components/FadeIn.astro';
 import { getProject, getAdjacentProjects } from '../data/projects';
 
 interface Props {
@@ -27,7 +27,7 @@ const pipelineSubtitles: Record<string, string> = {
   <main class="mx-auto max-w-5xl px-6 md:px-10">
 
     <!-- Hero: 2-col on desktop, pipeline on right -->
-    <FadeIn client:load>
+    <FadeIn>
       <section class="grid items-start gap-8 pb-10 pt-16 md:grid-cols-5 md:gap-12 md:pt-20">
         <div class="md:col-span-3">
           <div class="mb-3 text-[10px] uppercase tracking-[2px] text-gray-400">
@@ -47,7 +47,7 @@ const pipelineSubtitles: Record<string, string> = {
     </FadeIn>
 
     <!-- Metrics -->
-    <FadeIn client:visible>
+    <FadeIn>
       <section class="pb-10">
         <MetricsGrid metrics={project.metrics} />
       </section>
@@ -55,7 +55,7 @@ const pipelineSubtitles: Record<string, string> = {
 
     <!-- Outcomes: right after metrics, prominent style -->
     {project.outcomes && project.outcomes.length > 0 && (
-      <FadeIn client:visible delay={0.05}>
+      <FadeIn delay={0.05}>
         <section class="mb-10 rounded-2xl bg-gray-50 px-6 py-6 md:px-8 md:py-8">
           <SectionLabel text="Project Outcomes" />
           <ul class="space-y-3">
@@ -72,7 +72,7 @@ const pipelineSubtitles: Record<string, string> = {
 
     <!-- Background -->
     {project.background && (
-      <FadeIn client:visible delay={0.08}>
+      <FadeIn delay={0.08}>
         <section class="pb-10">
           <SectionLabel text="Project Background" />
           <p class="max-w-3xl text-sm leading-[1.9] text-gray-700">
@@ -84,7 +84,7 @@ const pipelineSubtitles: Record<string, string> = {
 
     <!-- Pain Points -->
     {project.painPoints && project.painPoints.length > 0 && (
-      <FadeIn client:visible delay={0.1}>
+      <FadeIn delay={0.1}>
         <section class="pb-10">
           <SectionLabel text="Core Challenges" />
           <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -104,7 +104,7 @@ const pipelineSubtitles: Record<string, string> = {
 
     <!-- Solution Positioning -->
     {project.solutionPositioning && (
-      <FadeIn client:visible delay={0.12}>
+      <FadeIn delay={0.12}>
         <section class="mb-10 rounded-2xl border border-indigo-100 bg-indigo-50/40 px-6 py-6 md:px-8 md:py-8">
           <SectionLabel text="Solution & Positioning" />
           <p class="text-sm leading-[1.9] text-gray-700">{project.solutionPositioning}</p>
@@ -114,7 +114,7 @@ const pipelineSubtitles: Record<string, string> = {
 
     <!-- Implementation Path (Case Study) -->
     {project.implementationPath && (
-      <FadeIn client:visible delay={0.12}>
+      <FadeIn delay={0.12}>
         <section class="mb-10">
           <SectionLabel text={project.implementationPath.title} />
           <p class="mb-6 text-[13px] leading-relaxed text-gray-500">{project.implementationPath.subtitle}</p>
@@ -142,7 +142,7 @@ const pipelineSubtitles: Record<string, string> = {
 
     <!-- Data Foundation -->
     {project.dataAssets && project.dataAssets.length > 0 && (
-      <FadeIn client:visible delay={0.12}>
+      <FadeIn delay={0.12}>
         <section class="py-10">
           <SectionLabel text="Data Foundation" />
           <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -160,7 +160,7 @@ const pipelineSubtitles: Record<string, string> = {
 
     <!-- Expert Roles -->
     {project.expertRoles && project.expertRoles.length > 0 && (
-      <FadeIn client:visible delay={0.14}>
+      <FadeIn delay={0.14}>
         <section class="pb-10">
           <SectionLabel text="14 Expert Roles" />
           <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
@@ -183,7 +183,7 @@ const pipelineSubtitles: Record<string, string> = {
     <hr class="border-gray-100" />
 
     <!-- Role + Tech Stack: side by side on desktop -->
-    <FadeIn client:visible delay={0.1}>
+    <FadeIn delay={0.1}>
       <section class="grid gap-8 py-10 md:grid-cols-5 md:gap-12">
         <div class="md:col-span-3">
           <SectionLabel text="My Role" />
@@ -202,7 +202,7 @@ const pipelineSubtitles: Record<string, string> = {
     {project.businessChains && project.businessChains.length > 0 && (
       <>
         <hr class="border-gray-100" />
-        <FadeIn client:visible delay={0.15}>
+        <FadeIn delay={0.15}>
           <section class="py-10">
             <SectionLabel text="9 Business Chains" />
             <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 md:gap-3 lg:grid-cols-3">
@@ -227,7 +227,7 @@ const pipelineSubtitles: Record<string, string> = {
 
     <!-- Quality Gates: visual evidence matrix -->
     {project.qualityGates && project.qualityGates.length > 0 && (
-      <FadeIn client:visible delay={0.18}>
+      <FadeIn delay={0.18}>
         <section class="pb-10">
           <SectionLabel text="Quality Gates" />
           <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 md:gap-3 lg:grid-cols-3">
@@ -249,7 +249,7 @@ const pipelineSubtitles: Record<string, string> = {
 
     <!-- RAG Q&A Example (AI assistant only) -->
     {project.ragExample && (
-      <FadeIn client:visible delay={0.15}>
+      <FadeIn delay={0.15}>
         <section class="mb-10 rounded-2xl bg-gray-50 px-6 py-6 md:px-8 md:py-8">
           <SectionLabel text="RAG Q&A Example" />
           <div class="space-y-4">
@@ -292,7 +292,7 @@ const pipelineSubtitles: Record<string, string> = {
     {project.subsystems && project.subsystems.length > 0 && (
       <>
         <hr class="border-gray-100" />
-        <FadeIn client:visible delay={0.15}>
+        <FadeIn delay={0.15}>
           <section class="py-10">
             <SectionLabel text="27 Subsystems Matrix" />
             <h4 class="mb-3 text-sm font-semibold text-gray-700">硬件子系统（17）</h4>
@@ -322,7 +322,7 @@ const pipelineSubtitles: Record<string, string> = {
     {project.screenshots && project.screenshots.length > 0 && (
       <>
         <hr class="border-gray-100" />
-        <FadeIn client:visible delay={0.15}>
+        <FadeIn delay={0.15}>
           <section class="py-10">
             <SectionLabel text="Screenshots" />
             <div class="grid gap-4 md:grid-cols-2">
@@ -373,7 +373,7 @@ const pipelineSubtitles: Record<string, string> = {
     {project.protocolSpecs && project.protocolSpecs.length > 0 && (
       <>
         <hr class="border-gray-100" />
-        <FadeIn client:visible delay={0.15}>
+        <FadeIn delay={0.15}>
           <section class="py-10">
             <SectionLabel text="Protocol Specs" />
             <div class="overflow-x-auto rounded-xl bg-gray-50 px-5 py-5 md:px-6 md:py-6">
@@ -406,7 +406,7 @@ const pipelineSubtitles: Record<string, string> = {
     <hr class="border-gray-100" />
 
     <!-- Highlights: cards with bullets + tags -->
-    <FadeIn client:visible delay={0.2}>
+    <FadeIn delay={0.2}>
       <section class="py-10">
         <SectionLabel text="Key Highlights" />
         <div class="grid gap-4 md:grid-cols-2">
@@ -453,7 +453,7 @@ const pipelineSubtitles: Record<string, string> = {
 
     <!-- Core Differentiators -->
     {project.coreDifferentiators && project.coreDifferentiators.length > 0 && (
-      <FadeIn client:visible delay={0.22}>
+      <FadeIn delay={0.22}>
         <section class="pb-10">
           <SectionLabel text="Core Differentiators" />
           <div class="space-y-3">
@@ -475,7 +475,7 @@ const pipelineSubtitles: Record<string, string> = {
 
     <!-- Reflection -->
     {project.reflection && (
-      <FadeIn client:visible delay={0.22}>
+      <FadeIn delay={0.22}>
         <section class="py-10">
           <SectionLabel text="Reflection & Takeaways" />
           <div class="rounded-2xl border border-amber-100 bg-amber-50/40 px-6 py-6 md:px-8 md:py-8">
@@ -487,7 +487,7 @@ const pipelineSubtitles: Record<string, string> = {
 
     <!-- Outlook -->
     {project.outlook && project.outlook.length > 0 && (
-      <FadeIn client:visible delay={0.24}>
+      <FadeIn delay={0.24}>
         <section class="pb-10">
           <SectionLabel text="Future Outlook" />
           <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">

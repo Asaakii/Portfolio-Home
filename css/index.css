@@ -3,11 +3,7 @@
   font-weight: 700;
   font-style: normal;
   font-display: swap;
-  src: url("../assets/fonts/GT-Sectra-Fine-Medium.eot");
-  src: url("../assets/fonts/GT-Sectra-Fine-Medium.eot?#iefix") format("eot"),
-    url("../assets/fonts/GT-Sectra-Fine-Medium.woff2") format("woff2"),
-    url("../assets/fonts/GT-Sectra-Fine-Medium.woff") format("woff"),
-    url("../assets/fonts/GT-Sectra-Fine-Medium.ttf") format("truetype");
+  src: url("../assets/fonts/GT-Sectra-Fine-Medium.woff2") format("woff2");
 }
 
 @font-face {
@@ -15,11 +11,7 @@
   font-weight: 400;
   font-style: normal;
   font-display: swap;
-  src: url("../assets/fonts/GT-Sectra-Fine-Book.eot");
-  src: url("../assets/fonts/GT-Sectra-Fine-Book.eot?#iefix") format("eot"),
-    url("../assets/fonts/GT-Sectra-Fine-Book.woff2") format("woff2"),
-    url("../assets/fonts/GT-Sectra-Fine-Book.woff") format("woff"),
-    url("../assets/fonts/GT-Sectra-Fine-Book.ttf") format("truetype");
+  src: url("../assets/fonts/GT-Sectra-Fine-Book.woff2") format("woff2");
 }
 
 @font-face {
@@ -27,11 +19,7 @@
   font-weight: 700;
   font-style: normal;
   font-display: swap;
-  src: url("../assets/fonts/nb_akademie_medium-webfont.eot");
-  src: url("../assets/fonts/nb_akademie_medium-webfont.eot?#iefix") format("eot"),
-    url("../assets/fonts/nb_akademie_medium-webfont.woff2") format("woff2"),
-    url("../assets/fonts/nb_akademie_medium-webfont.woff") format("woff"),
-    url("../assets/fonts/nb_akademie_medium-webfont.ttf") format("truetype");
+  src: url("../assets/fonts/nb_akademie_medium-webfont.woff2") format("woff2");
 }
 
 @font-face {
@@ -39,11 +27,7 @@
   font-weight: 400;
   font-style: normal;
   font-display: swap;
-  src: url("../assets/fonts/nb_akademie_light-webfont.eot");
-  src: url("../assets/fonts/nb_akademie_light-webfont.eot?#iefix") format("eot"),
-    url("../assets/fonts/nb_akademie_light-webfont.woff2") format("woff2"),
-    url("../assets/fonts/nb_akademie_light-webfont.woff") format("woff"),
-    url("../assets/fonts/nb_akademie_light-webfont.ttf") format("truetype");
+  src: url("../assets/fonts/nb_akademie_light-webfont.woff2") format("woff2");
 }
 
 html,
@@ -98,53 +82,31 @@ h1.hero-title,
 }
 
 .flex-vertical {
-  display: box;
   display: -webkit-flex;
-  display: -moz-flex;
   display: -ms-flexbox;
   display: flex;
-  -moz-box-pack: center;
-  box-pack: center;
   -webkit-justify-content: center;
-  -moz-justify-content: center;
   -ms-justify-content: center;
-  -o-justify-content: center;
   justify-content: center;
   -ms-flex-pack: center;
-  box-orient: vertical;
   -webkit-flex-direction: column;
-  -moz-flex-direction: column;
   flex-direction: column;
   -ms-flex-direction: column;
 }
 
 .flex-horizontal {
   display: -webkit-box;
-  display: -moz-box;
-  display: box;
   display: -webkit-flex;
-  display: -moz-flex;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-  -moz-box-pack: center;
-  box-pack: center;
   -webkit-justify-content: center;
-  -moz-justify-content: center;
   -ms-justify-content: center;
-  -o-justify-content: center;
   justify-content: center;
   -ms-flex-pack: center;
-  box-orient: horizontal;
   -webkit-flex-direction: row;
-  -moz-flex-direction: row;
   flex-direction: row;
   -ms-flex-direction: row;
-}
-
-html {
-  line-height: 1.15;
-  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -499,6 +461,8 @@ html {
   height: 100%;
   font-size: 20px;
   color: #e8e8e8;
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
   -webkit-overflow-scrolling: touch;
   touch-action: none;
 }
@@ -712,7 +676,7 @@ ul.nav {
   content: "";
   width: 100%;
   height: 100%;
-  background-image: url(../assets//images/dark.png);
+  background-image: url(../assets/images/dark.png);
   background-size: 100% 100%;
   z-index: -1;
   opacity: 0.2;

@@ -1,13 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import FadeIn from '../components/FadeIn.tsx';
+import FadeIn from '../components/FadeIn.astro';
 import { projects } from '../data/projects';
 ---
 
 <Layout title="Asaakii's Projects">
   <main class="mx-auto max-w-5xl px-6 md:px-10">
-    <FadeIn client:load>
+    <FadeIn>
       <section class="pb-14 pt-20 md:pt-24">
         <div class="mb-4 text-[11px] uppercase tracking-[3px] text-gray-400">
           AI Agent / RAG Engineer
@@ -27,7 +27,7 @@ import { projects } from '../data/projects';
       <div class="mb-5 text-[10px] uppercase tracking-[2px] text-gray-300">
         Selected Projects
       </div>
-      <FadeIn client:visible delay={0.1}>
+      <FadeIn delay={0.1}>
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {
             projects.map((project) => (

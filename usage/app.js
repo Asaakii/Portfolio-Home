@@ -1,3 +1,4 @@
+const DATA_URL = './data.json?v=data-v1'
 const compact = new Intl.NumberFormat('en-US', { notation: 'compact', maximumFractionDigits: 1 })
 const full = new Intl.NumberFormat('en-US')
 const dateFormat = new Intl.DateTimeFormat('zh-CN', { year: 'numeric', month: 'short', day: 'numeric' })
@@ -136,7 +137,7 @@ function animateUpdate(data, range) {
   }, 180)
 }
 
-fetch('./data.json', { cache: 'no-store' })
+fetch(DATA_URL)
   .then((response) => { if (!response.ok) throw new Error('数据快照尚未生成'); return response.json() })
   .then((data) => {
     const from = document.querySelector('#from-date')

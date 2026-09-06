@@ -1,51 +1,37 @@
-# Astro Starter Kit: Minimal
+# 项目集（projects-site）
 
-```sh
-npm create astro@latest -- --template minimal
-```
+个人主页的「项目集」子站点源码，构建产物发布到仓库根目录的 `projects/`。
 
-<!-- ASTRO:REMOVE:START -->
+## 技术栈
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+- **Astro 6** — 纯静态输出（`output: 'static'`），`base: '/projects'`，全站零外部 JS 运行时
+- **Tailwind CSS 4** — 通过 `@tailwindcss/vite` 插件接入
+- **淡入动画** — `src/components/FadeIn.astro` 用纯 CSS transition + IntersectionObserver 实现（`src/layouts/Layout.astro` 里的内联脚本驱动），不依赖 React / motion
 
-<!-- ASTRO:REMOVE:END -->
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
+## 目录结构
 
 ```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+src/
+├── pages/          # 路由页面：index + ai-assistant / county-agent / data-collection / smart-platform
+├── layouts/        # Layout.astro（通用骨架 + 淡入脚本）、ProjectLayout.astro（项目详情页）
+├── components/     # FadeIn / Header / Footer / ProjectCard / HeroPipeline / MetricsGrid / SectionLabel / TechTags
+├── data/           # 项目数据
+└── styles/         # 全局样式
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## 命令
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+```bash
+npm install          # 安装依赖（需要 Node >= 22.12）
+npm run dev          # 本地开发，localhost:4321
+npm run build        # 构建到 ./dist/
+npm run preview      # 本地预览构建产物
+```
 
-Any static assets, like images, can be placed in the `public/` directory.
+## 发布
 
-## 🧞 Commands
+构建后把产物同步到部署目录：
 
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+```bash
+npm run build && rsync -a --delete dist/ ../projects/
+```

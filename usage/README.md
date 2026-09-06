@@ -9,3 +9,5 @@ node scripts/update-usage-public.mjs --source /Users/leehom/Documents/kimi/tasks
 ```
 
 随后提交 `usage/` 下的变更即可发布新的静态数据。
+
+注意：`usage/app.js` 顶部的 `DATA_URL` 带有 `?v=data-v1` 版本号用于缓存控制。每次更新数据后请递增该版本号（如 `data-v2`），否则访客可能读到浏览器缓存的旧数据。

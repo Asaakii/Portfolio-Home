@@ -70,6 +70,28 @@ export interface Project {
     subtitle: string;
     steps: { name: string; description: string }[];
   };
+  runtimeCase?: {
+    title: string;
+    subtitle: string;
+    input: { label: string; value: string }[];
+    steps: {
+      name: string;
+      tool: string;
+      description: string;
+      result: string;
+    }[];
+  };
+  engineeringMethods?: {
+    title: string;
+    description: string;
+    items: { title: string; description: string }[];
+    evidence: { value: string; label: string; detail: string }[];
+  };
+  deliveryLayers?: {
+    name: string;
+    format: string;
+    description: string;
+  }[];
   coreDifferentiators?: { title: string; description: string }[];
   role: string;
   techStack: string[];
@@ -222,6 +244,99 @@ export const projects: Project[] = [
         },
       ],
     },
+    runtimeCase: {
+      title: '隆昌市运行监测 · 真实任务链路',
+      subtitle: '用一个具体任务展示 Agent Runtime 如何把业务请求转换为带依据、可复核的交付物',
+      input: [
+        { label: '县域', value: '隆昌市 · 510283' },
+        { label: '周期', value: '2024 年' },
+        { label: '任务', value: '综合运行监测' },
+        { label: '输出', value: '运行监测报告' },
+      ],
+      steps: [
+        {
+          name: '任务受理',
+          tool: 'intake',
+          description: '识别县域、周期、问题和期望产物，将自然语言请求映射为标准化任务。',
+          result: '匹配 workflow_id，形成任务上下文',
+        },
+        {
+          name: '角色分派',
+          tool: 'role_dispatch',
+          description: '按业务链加载运行监测角色、职责边界、可调用工具和结构化输出契约。',
+          result: '确定角色、工具权限与分析 SOP',
+        },
+        {
+          name: '指标查询',
+          tool: 'query_indicator · MCP',
+          description: '从 PostgreSQL 查询 GDP、规上工业增加值、固定资产投资等指标及同比数据。',
+          result: '精确数字保留来源、年份与统计口径',
+        },
+        {
+          name: '背景检索',
+          tool: 'Dify RAG · Rerank',
+          description: '按 data_period=2024、source_level=县级过滤，检索统计公报与政府工作报告。',
+          result: '获得政策背景、原文片段与来源关联',
+        },
+        {
+          name: '分析包组装',
+          tool: 'CountyEconomyState',
+          description: '融合硬指标、背景证据、预警项和待核验事项，形成供下游写作使用的中间契约。',
+          result: '运行摘要、预警项与横向比较依据',
+        },
+        {
+          name: '审查与交付',
+          tool: 'review · artifact registry',
+          description: '检查数字来源、证据边界、结构与发布条件，登记报告和审查轨迹。',
+          result: '输出可阅读、可复核、可追溯的运行监测报告',
+        },
+      ],
+    },
+    engineeringMethods: {
+      title: '知识工程与 RAG 优化',
+      description: '把专家经验、研究方法和分散资料转化为可执行规则、可调用工具与可回归验证的检索能力。',
+      items: [
+        {
+          title: '专家经验结构化',
+          description: '通过结构化访谈提炼分析对象、判断维度、证据要求、适用条件与反例，沉淀为角色规则和业务 SOP。',
+        },
+        {
+          title: '研究方法工具化',
+          description: '显式定义公式变量、数据前提和输出边界，将确定性计算封装为 SQL、数据处理或模型分析工具。',
+        },
+        {
+          title: '四维元数据过滤',
+          description: '按 domain、data_type、data_period、source_level 缩小检索范围，再进行语义召回与重排序。',
+        },
+        {
+          title: '固定题集回归',
+          description: '用预设问题持续检查目标资料召回、领域命中、噪音过滤和引用正确性，让优化结果可比较。',
+        },
+      ],
+      evidence: [
+        { value: '12 题', label: '固定检索测试集', detail: '用于语料、分块与检索策略 A/B 回归' },
+        { value: '1,855 → 720 字', label: '报告平均分块', detail: '层级分块后消除超大文本块' },
+        { value: '0 → 0.67–0.75', label: '会议纪要语义得分', detail: '清洗口语碎片并重建知识条目' },
+        { value: '0.815', label: '表目录查询得分', detail: '为 206 张表建立业务域目录索引' },
+      ],
+    },
+    deliveryLayers: [
+      {
+        name: '报告层',
+        format: 'Markdown · Word',
+        description: '面向业务人员与专家评审，提供可阅读、可编辑的报告和送审材料。',
+      },
+      {
+        name: '结构化层',
+        format: 'JSON · Matrix · List',
+        description: '输出政策矩阵、项目清单和数据资产目录，供前端与下游流程继续消费。',
+      },
+      {
+        name: '审计元数据层',
+        format: 'Evidence · Review · Trace',
+        description: '保留证据关联、质量审查、工具调用和任务轨迹，支撑追溯、排障与复核。',
+      },
+    ],
     coreDifferentiators: [
       {
         title: '证据层级体系',

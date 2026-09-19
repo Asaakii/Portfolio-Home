@@ -8,13 +8,80 @@ interface Props {
 const { metrics } = Astro.props;
 ---
 
-<div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+<div data-metrics-grid class="grid grid-cols-2 gap-3 sm:grid-cols-4">
   {
     metrics.map((m) => (
-      <div class="rounded-xl border border-gray-200 bg-white p-5 text-center">
-        <div class="text-2xl font-semibold text-gray-900">{m.value}</div>
+      <div class="group rounded-xl border border-gray-200 bg-white p-5 text-center transition-all duration-300 hover:-translate-y-1 hover:border-indigo-200 hover:shadow-md">
+        <div
+          data-metric-value
+          data-target={m.value}
+          aria-label={m.value}
+          class="text-2xl font-semibold tabular-nums text-gray-900 transition-colors group-hover:text-indigo-600"
+        >
+          {m.value}
+        </div>
         <div class="mt-1.5 text-[11px] text-gray-500">{m.label}</div>
       </div>
     ))
   }
 </div>
+
+<script>
+  const reduceMetricMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  document.querySelectorAll<HTMLElement>('[data-metrics-grid]').forEach((grid) => {
+    const values = Array.from(grid.querySelectorAll<HTMLElement>('[data-metric-value]'));
+    let hasAnimated = false;
+
+    const animate = () => {
+      if (hasAnimated) return;
+      hasAnimated = true;
+
+      values.forEach((element, index) => {
+        const targetText = element.dataset.target || '';
+        const match = targetText.match(/^([^0-9]*)([\d,]+(?:\.\d+)?)(.*)$/);
+        if (!match || reduceMetricMotion) {
+          element.textContent = targetText;
+          return;
+        }
+
+        const [, prefix, numericText, suffix] = match;
+        const target = Number(numericText.replaceAll(',', ''));
+        const decimalPlaces = numericText.includes('.') ? numericText.split('.')[1].length : 0;
+        const usesGrouping = numericText.includes(',');
+        const duration = 760 + index * 90;
+        const startedAt = performance.now();
+
+        const frame = (now: number) => {
+          const progress = Math.min((now - startedAt) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const current = target * eased;
+          const formatted = decimalPlaces > 0
+            ? current.toFixed(decimalPlaces)
+            : Math.round(current).toLocaleString(usesGrouping ? 'en-US' : 'en-US', {
+                useGrouping: usesGrouping,
+              });
+          element.textContent = `${prefix}${formatted}${suffix}`;
+          if (progress < 1) requestAnimationFrame(frame);
+          else element.textContent = targetText;
+        };
+
+        requestAnimationFrame(frame);
+      });
+    };
+
+    if (!('IntersectionObserver' in window)) {
+      animate();
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        animate();
+        observer.disconnect();
+      }
+    }, { threshold: 0.35 });
+
+    observer.observe(grid);
+  });
+</script>

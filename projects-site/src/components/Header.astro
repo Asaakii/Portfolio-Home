@@ -74,10 +74,35 @@ const { showBack = false } = Astro.props;
       Contact
     </a>
   </div>
+  {showBack && (
+    <div class="absolute inset-x-0 bottom-0 h-px overflow-hidden bg-transparent" aria-hidden="true">
+      <div id="reading-progress" class="h-full origin-left scale-x-0 bg-indigo-400/80 will-change-transform" />
+    </div>
+  )}
 </header>
 
 <script>
   const toggle = document.getElementById('menu-toggle');
   const menu = document.getElementById('mobile-menu');
   toggle?.addEventListener('click', () => menu?.classList.toggle('hidden'));
+
+  const progress = document.getElementById('reading-progress');
+  if (progress) {
+    let ticking = false;
+    const updateProgress = () => {
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      const ratio = scrollable > 0 ? Math.min(window.scrollY / scrollable, 1) : 0;
+      progress.style.transform = `scaleX(${ratio})`;
+      ticking = false;
+    };
+    const requestProgressUpdate = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateProgress);
+        ticking = true;
+      }
+    };
+    updateProgress();
+    window.addEventListener('scroll', requestProgressUpdate, { passive: true });
+    window.addEventListener('resize', requestProgressUpdate);
+  }
 </script>

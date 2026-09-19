@@ -641,8 +641,8 @@ const sectionNav = [
         <SectionLabel text="Key Highlights" />
         <div class="grid gap-4 md:grid-cols-2">
           {
-            project.highlights.map((h, i) => (
-              <details open={i === 0} class="group rounded-xl border border-gray-200 bg-white px-5 py-5 shadow-sm transition-all open:border-indigo-200 open:shadow-md hover:border-gray-300 hover:shadow-md">
+            project.highlights.map((h) => (
+              <details open class="group rounded-xl border border-gray-200 bg-white px-5 py-5 shadow-sm transition-all open:border-indigo-200 open:shadow-md hover:border-gray-300 hover:shadow-md">
                 <summary class="flex cursor-pointer list-none items-center justify-between gap-4 [&::-webkit-details-marker]:hidden">
                   <h3 class="text-sm font-semibold text-gray-900">{h.title}</h3>
                   <span class="flex h-6 w-6 flex-none items-center justify-center rounded-full bg-gray-50 text-base font-light text-gray-400 transition-all group-open:rotate-45 group-open:bg-indigo-50 group-open:text-indigo-500" aria-hidden="true">+</span>

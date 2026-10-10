@@ -121,9 +121,18 @@ if (page) {
       const selected = button.dataset.handbookFilter === value;
       button.classList.toggle('selected', selected); button.setAttribute('aria-pressed', String(selected));
     });
+    page!.querySelectorAll<HTMLElement>('[data-handbook-jump]').forEach(button => {
+      const selected = button.dataset.handbookJump === value;
+      button.classList.toggle('selected', selected); button.setAttribute('aria-pressed', String(selected));
+    });
     filterTopics();
   }
   page.querySelectorAll<HTMLButtonElement>('[data-handbook-filter]').forEach(button => button.addEventListener('click', () => setChapterFilter(button.dataset.handbookFilter!)));
+  page.querySelectorAll<HTMLButtonElement>('[data-handbook-jump]').forEach(button => button.addEventListener('click', () => {
+    setChapterFilter(button.dataset.handbookJump!);
+    const toolbar = document.querySelector('.handbook-toolbar');
+    toolbar?.scrollIntoView({ block: 'start', behavior: 'smooth' });
+  }));
   document.getElementById('handbook-collapse')?.addEventListener('click', () => topics.forEach(topic => { topic.open = false; }));
   document.addEventListener('keydown', event => {
     if (event.key === '/' && !(event.target instanceof HTMLInputElement) && !(event.target instanceof HTMLTextAreaElement) && !(event.target as HTMLElement)?.isContentEditable) {

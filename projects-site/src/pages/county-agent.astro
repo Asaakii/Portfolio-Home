@@ -19,14 +19,14 @@ const originalWorkflow = {
 };
 const implementationImages = project.screenshots!;
 const handbookStages = [
-  { chapter: 1, tag: '01 业务原点', title: '需求定义与权力边界', desc: '183 县治理六大痛点、智能内核职责范围与法定审签权力边界' },
-  { chapter: 2, tag: '02 架构与运行时', title: '双层解耦与状态机拓扑', desc: 'Hermes 平台宿主 + LangGraph 状态图、稳态超时治理与并发扇出' },
-  { chapter: 3, tag: '03 数据与知识', title: '双通道底座与知识工程', desc: '硬指标 SQL 通道、Dify 专题知识库、GraphRAG 与五层上下文工程' },
-  { chapter: 4, tag: '04 业务链流水线', title: '9 条全流程端到端编排', desc: '感知监测（4.1/4.2/4.8）→ 诊断归因（4.3/4.4/4.9）→ 决策落地（4.5/4.6/4.7）' },
-  { chapter: 5, tag: '05 专家协同沙箱', title: '16 角色工位与代码硬护栏', desc: '宏观/数据/产业/规划 4 大专家组、Harness 代码硬拦截与沙箱物理隔离' },
-  { chapter: 6, tag: '06 质量门禁与评测', title: '6 层拦截网与 CI/CD 评测', desc: '数字/证据/逻辑/结构/敏感/发布 6 道门禁、L1-L4 契约与四维自动化评测' },
-  { chapter: 7, tag: '07 隆昌实战交付', title: '12 阶段落地与 50+ 资产', desc: '隆昌 510283 端到端实战验证、30min 初稿流水线与规划送审稿交付' },
-  { chapter: 8, tag: '08 生产就绪复盘', title: '5 维验收与循环可观测', desc: '业务确定性认知、数据工程基石、生产就绪 Checklist 与收敛度量' },
+  { chapter: 1, tag: '01 业务原点', title: '需求定义与权力边界', desc: '183 县治理痛点、智能内核职责范围与法定审签边界' },
+  { chapter: 2, tag: '02 架构与运行时', title: '双层解耦与状态机拓扑', desc: 'Hermes 平台宿主与 LangGraph 运行时、超时治理与并发控制' },
+  { chapter: 3, tag: '03 数据与知识', title: '双通道数据与知识工程', desc: '统计数值 SQL 通道、Dify 专题知识库、GraphRAG 检索与上下文装配' },
+  { chapter: 4, tag: '04 业务流水线', title: '9 条端到端业务编排', desc: '指标监测（4.1/4.2/4.8）、产业与瓶颈诊断（4.3/4.4/4.9）、规划与招商（4.5/4.6/4.7）' },
+  { chapter: 5, tag: '05 专家协同沙箱', title: '16 角色工位与代码拦截', desc: '宏观、数据、产业与规划 4 组专家工位，代码拦截与上下文隔离' },
+  { chapter: 6, tag: '06 质量门禁与评测', title: '6 层审查网与自动化评测', desc: '数字、证据、逻辑、格式、敏感与发布审查，L1-L4 证据契约与评测集回归' },
+  { chapter: 7, tag: '07 隆昌实战交付', title: '12 阶段落地与 50+ 交付资产', desc: '隆昌（510283）端到端验证，数据完整时约 30 分钟生成初稿并导出送审稿' },
+  { chapter: 8, tag: '08 生产就绪复盘', title: '5 维验收标准与收敛度量', desc: '确定性控制、推理前数据治理、上线验收清单与循环退出审计' },
 ];
 ---
 <Layout title="县域经济智能内核 · 从资料到决策 — Asaakii" showBack>
@@ -160,7 +160,7 @@ WHERE county_code = :county_code
         <div>
           <p class="eyebrow">10 / COMPLETE TECHNICAL COMPANION</p>
           <h2>架构全貌与生产级技术手册。</h2>
-          <p>白皮书 8 个核心章节与 56 个工业级技术主题在此建立完整规范索引。涵盖业务痛点、内核解耦、状态机拓扑、9 条业务链流水线、16 角色沙箱、分层门禁与生产就绪复盘，提供严密的工程逻辑递进与实现细节。</p>
+          <p>白皮书 8 个章节与 56 个技术主题索引，梳理业务背景、平台解耦、状态机设计、9 条业务流水线、16 个专家工位、质量门禁与生产验收项。</p>
         </div>
         <a class="button quiet" href="/projects/county-agent/whitepaper.md" download>下载架构白皮书全文 ↓</a>
       </div>
@@ -168,8 +168,8 @@ WHERE county_code = :county_code
       <div class="handbook-roadmap-card">
         <div class="roadmap-card-header">
           <span class="micro-label">SYSTEM ARCHITECTURE BLUEPRINT</span>
-          <h3>白皮书技术架构八阶递进脉络</h3>
-          <p>从业务痛点推导内核分层，从数据底座串联业务流水线，再到沙箱隔离、质量防线与生产验收，形成逻辑闭环。点击卡片可快速聚焦对应章节：</p>
+          <h3>白皮书技术章节逻辑递进</h3>
+          <p>从业务需求梳理到系统分层，由数据底座连接业务流水线，再到沙箱隔离、审查门禁与生产验收。点击卡片可快速筛选对应章节：</p>
         </div>
         <div class="roadmap-grid">
           {handbookStages.map(stage => (
